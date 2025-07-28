@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Haven Hotel - Luxury Accommodations</title>
+     <!-- Bootstrap Icons -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8d7j3z5l5e5c5e5e5e5e5e5e5e5e5e5e5e" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header>
+        <div class="top-bar">
+            <div class="contact-info">
+                <span><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</span>
+                <span><i class="bi bi-envelope-fill"></i> info@serenityhavenhotel.com</span>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-twitter-x"></i></a>
+            </div>
+        </div>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Serenity <span>Haven</span></a>
+            <button class="mobile-menu-btn"><i class="bi bi-list"></i></button>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#" class="nav-link" data-section="hero">Home</a></li>
+                    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                    <li><a href="#rooms-preview" class="nav-link" data-section="rooms-preview">Rooms</a></li>
+                    <li><a href="#amenities" class="nav-link" data-section="amenities">Amenities</a></li>
+                    <li><a href="#testimonials" class="nav-link" data-section="testimonials">Testimonials</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="booking-btn" id="nav-book-btn">Book Now</button>
+        </div>
+    </header>
+
+    <!-- Hero section with image slider -->
+    <section class="hero">
+        <div class="slide" style="background-image: url('images/img\ 1.webp')"></div>
+        <div class="slide" style="background-image: url('images/img\ 2.webp')"></div>
+        <div class="slide" style="background-image: url('images/img\ 3.webp')"></div>
+        <div class="hero-content">
+            <h1>Experience Luxury Like Never Before</h1>
+            <p>Welcome to Serenity Haven, where exceptional service meets unparalleled comfort in a breathtaking setting.</p>
+            <button class="booking-btn" id="check-availability-btn">Check Availability</button>
+        </div>
+    </section>
+    
+    <!-- Room Availability Checker Modal -->
+    <div id="availability-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #333; margin: 0;">Check Availability</h2>
+                <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+            </div>
+            <form id="availability-form">
+                <div style="margin-bottom: 15px;">
+                    <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in Date:</label>
+                    <input type="date" id="check-in" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out Date:</label>
+                    <input type="date" id="check-out" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of Guests:</label>
+                    <select id="guests" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5+ Guests</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room Type:</label>
+                    <select id="room-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                        <option value="any" selected>Any Available</option>
+                        <option value="deluxe">Deluxe Room</option>
+                        <option value="executive">Executive Suite</option>
+                        <option value="presidential">Presidential Suite</option>
+                    </select>
+                </div>
+                <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- About section -->
+    <section id="about" class="about">
+        <h2 class="section-title">About Our Hotel</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>A Legacy of Luxury Since 1995</h3>
+                <p>Nestled in the heart of the city, Serenity Haven has been a symbol of luxury and exceptional hospitality for over two decades. Our hotel combines contemporary elegance with timeless charm to create an unforgettable experience for our guests.</p>
+                <p>With meticulously designed interiors, world-class amenities, and a staff dedicated to exceeding your expectations, we ensure that every stay with us becomes a cherished memory.</p>
+                <p>Whether you're visiting for business or pleasure, our prime location offers easy access to the city's major attractions, shopping districts, and business centers.</p>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </section>
+
+    <!-- Rooms preview section -->
+    <section id="rooms-preview" class="rooms-preview">
+        <h2 class="section-title">Our Accommodations</h2>
+        <div class="rooms-grid">
+            <div class="room-card">
+                <div class="room-image-container">
+                    <img class="room-image" src="/images/img 4.webp" alt="Room Name">
+                </div>
+                <div class="room-details">
+                    <h3>Deluxe Rooms</h3>
+                    <p>Spacious comfort with modern amenities and city views.</p>
+                    <div class="room-price">From $199/night</div>
+                    <a href="rooms.html" class="view-details-btn">View Details</a>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image-container">
+                    <img class="room-image" src="images/img 5.webp" alt="Room Name">
+                </div>
+                <div class="room-details">
+                    <h3>Executive Suite</h3>
+                    <p>Separate living area with premium furnishings and services.</p>
+                    <div class="room-price">From $299/night</div>
+                    <a href="rooms.html" class="view-details-btn">View Details</a>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image-container">
+                    <img class="room-image" src="images/img 6.webp" alt="Room Name">
+                </div>
+                <div class="room-details">
+                    <h3>Presidential Suite</h3>
+                    <p>Ultimate luxury with panoramic views and exclusive perks.</p>
+                    <div class="room-price">From $499/night</div>
+                    <a href="rooms.html" class="view-details-btn">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities section -->
+    <section id="amenities" class="amenities">
+        <h2 class="section-title">Hotel Amenities</h2>
+        <div class="amenities-grid">
+            <div class="amenity-card">
+                <div class="amenity-icon">🍽️</div>
+                <h3>Gourmet Restaurant</h3>
+                <p>Experience culinary excellence with our award-winning chefs.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="amenity-icon">💆</div>
+                <h3>Luxury Spa</h3>
+                <p>Rejuvenate your body and mind with our premium spa treatments.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="amenity-icon">🏊</div>
+                <h3>Infinity Pool</h3>
+                <p>Take a dip in our rooftop pool with stunning panoramic views.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="amenity-icon">💪</div>
+                <h3>Fitness Center</h3>
+                <p>Stay fit with state-of-the-art equipment and personal trainers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials section -->
+    <section id="testimonials" class="testimonials">
+        <h2 class="section-title">Guest Experiences</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial-card">
+                <div class="guest-image"></div>
+                <p class="quote">"Our stay at Serenity Haven exceeded all expectations. The staff went above and beyond to make our anniversary special. We'll definitely be back!"</p>
+                <p class="guest-name">- James & Sarah Wilson</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to action section -->
+    <section class="cta">
+        <h2>Experience Luxury Today</h2>
+        <p>Book your stay now and receive complimentary breakfast and spa access.</p>
+        <button class="room-btn">Reserve Your Stay</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Serenity Haven</h3>
+                <p>123 Luxury Avenue</p>
+                <p>Cityville, State 12345</p>
+                <p>United States</p>
+                <p>Phone: +1 (555) 123-4567</p>
+                <p>Email: info@serenityhavenhotel.com</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="rooms.html">Rooms & Suites</a>
+                <a href="amenities.html">Amenities</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <a href="#">Special Offers</a>
+                <a href="#">Events</a>
+                <a href="#">Gift Cards</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for exclusive offers and updates.</p>
+                <form>
+                    <input type="email" placeholder="Your email address" style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: 5px; border: none;">
+                    <button type="submit" style="padding: 10px; width: 100%; background-color: #d4af37; color: white; border: none; border-radius: 5px; cursor: pointer;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Serenity Haven Hotel. All rights reserved.</p>
+        </div>
+    </footer>!
+    <!-- JavaScript -->
+    <script src="js/index.js"></script>
+    <script src="js/roomavability.js"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         /* Room Filter Section */
+         .room-filter {
+            padding: 50px 5%;
+            background-color: #f9f9f9;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .filter-item select, .filter-item input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .filter-btn {
+            background-color: #d4af37;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover {
+            background-color: #c4a030;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+ </head>
+ <body>
+    <!-- Room Filter Section -->
+  <section class="room-filter" data-aos="fade-up">
+    <form class="filter-container">
+        <div class="filter-item">
+            <label for="check-in">Check-in Date</label>
+            <input type="date" id="check-in" required>
+        </div>
+        <div class="filter-item">
+            <label for="check-out">Check-out Date</label>
+            <input type="date" id="check-out" required>
+        </div>
+        <div class="filter-item">
+            <label for="adults">Adults</label>
+            <select id="adults">
+                <option value="1">1 Adult</option>
+                <option value="2" selected>2 Adults</option>
+                <option value="3">3 Adults</option>
+                <option value="4">4 Adults</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <label for="children">Children</label>
+            <select id="children">
+                <option value="0" selected>0 Children</option>
+                <option value="1">1 Child</option>
+                <option value="2">2 Children</option>
+                <option value="3">3 Children</option>
+            </select>
+        </div>
+        <div class="filter-item">
+            <label for="room-type">Room Type</label>
+            <select id="room-type">
+                <option value="all" selected>All Room Types</option>
+                <option value="deluxe">Deluxe Room</option>
+                <option value="executive">Executive Suite</option>
+                <option value="presidential">Presidential Suite</option>
+                <option value="family">Family Suite</option>
+            </select>
+        </div>
+        <div class="filter-item" style="display: flex; align-items: flex-end;">
+            <button type="submit" class="filter-btn"><i class="bi bi-search"></i> Check Availability</button>
+        </div>
+    </form>
+    <!--
+    <span>📞 +1 (555) 123-4567</span>
+                <span>✉️ info@serenityhavenhotel.com</span>
+                <section id="amenities" class="amenities">
+        <h2 class="section-title">Hotel Amenities</h2>
+        <div class="amenities-grid">
+            <div class="amenity-card">
+                <div class="amenity-icon">🍽️</div>
+                <h3>Gourmet Restaurant</h3>
+                <p>Experience culinary excellence with our award-winning chefs.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="amenity-icon">💆</div>
+                <h3>Luxury Spa</h3>
+                <p>Rejuvenate your body and mind with our premium spa treatments.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="amenity-icon">🏊</div>
+                <h3>Infinity Pool</h3>
+                <p>Take a dip in our rooftop pool with stunning panoramic views.</p>
+            </div>
+            <div class="amenity-card">
+                <div class="amenity-icon">💪</div>
+                <h3>Fitness Center</h3>
+                <p>Stay fit with state-of-the-art equipment and personal trainers.</p>
+            </div>
+        </div>
+    </section>
+    -->
+</section>
+<script>
+     // Room filter form submission
+     const filterForm = document.querySelector('.filter-container');
+    if (filterForm) {
+        filterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add functionality for filtering rooms
+            alert('Room search feature will be implemented soon!');
+        });
+    }
+</script>
+ </body>
+ </html>
+ 

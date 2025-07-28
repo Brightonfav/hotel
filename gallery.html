@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Serenity Haven Hotel</title>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- LightGallery Plugin -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css">
+    <!-- Additional LightGallery Plugin CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-zoom.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-thumbnail.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: #1a1a1a;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            background-color: #0f0f0f;
+        }
+        
+        .contact-info {
+            font-size: 14px;
+        }
+        
+        .contact-info span {
+            margin-right: 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin-left: 15px;
+            text-decoration: none;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo span {
+            color: #d4af37;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: #d4af37;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .booking-btn {
+            background-color: #d4af37;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .booking-btn:hover {
+            background-color: #c4a030;
+        }
+        
+        /* Page Banner */
+        .page-banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/img\ 10.webp') center/cover no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 5%;
+        }
+        
+        .page-banner h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb li a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        /* Gallery Section Styles */
+        .gallery-section {
+            padding: 80px 5%;
+        }
+        
+        .section-title {
+            position: relative;
+            font-size: 36px;
+            margin-bottom: 60px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #d4af37;
+        }
+
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .filter-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            color: #666;
+            position: relative;
+        }
+        
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #d4af37;
+            transition: width 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            color: #d4af37;
+        }
+        
+        .filter-btn:hover::after, .filter-btn.active::after {
+            width: 70%;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            height: 250px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay h3 {
+            margin-bottom: 10px;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-overlay .view-btn {
+            background-color: #d4af37;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(20px);
+            transition: transform 0.3s 0.1s;
+        }
+        
+        .gallery-item:hover .gallery-overlay h3,
+        .gallery-item:hover .gallery-overlay .view-btn {
+            transform: translateY(0);
+        }
+
+        .featured-gallery {
+            margin-bottom: 60px;
+        }
+        
+        .featured-gallery-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .featured-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .featured-slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .featured-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+        }
+        
+        .featured-caption h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .featured-caption p {
+            max-width: 600px;
+        }
+
+        .testimonial-section {
+            padding: 60px 5%;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .testimonial {
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            color: #d4af37;
+            font-size: 50px;
+            line-height: 0;
+            position: relative;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .author-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Virtual Tour Section */
+        .virtual-tour {
+            padding: 60px 5%;
+            text-align: center;
+        }
+        
+        .virtual-tour-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .virtual-tour-frame {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-top: 30px;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .virtual-tour-placeholder {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .virtual-tour-icon {
+            font-size: 48px;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+
+        /* Call to action section */
+        .cta {
+            padding: 60px 5%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .room-btn {
+            background-color: #333;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .room-btn:hover {
+            background-color: #d4af37;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 5% 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .footer-column a:hover {
+            color: #d4af37;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #ccc;
+        }
+        
+        /* Animation classes */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        
+        .fade-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        @keyframes galleryItemFloat {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        
+        .float-animation {
+            animation: galleryItemFloat 4s ease-in-out infinite;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .featured-slider {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 5%;
+                top: 20px;
+            }
+            
+            nav {
+                width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            nav.active {
+                max-height: 300px;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .page-banner h1 {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 30px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .gallery-item {
+                height: 200px;
+            }
+            
+            .featured-slider {
+                height: 350px;
+            }
+            
+            .virtual-tour-frame {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item {
+                height: 250px;
+            }
+            
+            .featured-slider {
+                height: 300px;
+            }
+            
+            .featured-caption h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header>
+        <div class="top-bar">
+            <div class="contact-info">
+                <span><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</span>
+                <span><i class="bi bi-envelope-fill"></i> info@serenityhavenhotel.com</span>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="bi bi-facebook"></i></a>
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-twitter-x"></i></a>
+            </div>
+        </div>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Serenity <span>Haven</span></a>
+            <button class="mobile-menu-btn"><i class="bi bi-list"></i></button>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rooms.html">Rooms & Suites</a></li>
+                    <li><a href="amenities.html">Amenities</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="booking-btn" id="nav-book-btn">Book Now</button>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner" data-aos="fade-down">
+        <h1>Our Gallery</h1>
+        <ul class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li>></li>
+            <li>Gallery</li>
+        </ul>
+    </section>
+     <!-- Room Availability Checker Modal -->
+     <div id="availability-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #333; margin: 0;">Check Availability</h2>
+                <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+            </div>
+            <form id="availability-form">
+                <div style="margin-bottom: 15px;">
+                    <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in Date:</label>
+                    <input type="date" id="check-in" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out Date:</label>
+                    <input type="date" id="check-out" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of Guests:</label>
+                    <select id="guests" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5+ Guests</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room Type:</label>
+                    <select id="room-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                        <option value="any" selected>Any Available</option>
+                        <option value="deluxe">Deluxe Room</option>
+                        <option value="executive">Executive Suite</option>
+                        <option value="presidential">Presidential Suite</option>
+                    </select>
+                </div>
+                <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Featured Gallery Section -->
+    <section class="featured-gallery" data-aos="fade-up">
+        <div class="featured-slider">
+            <img src="/images/img 16.jpg" alt="Luxury Hotel Exterior">
+            <div class="featured-caption">
+                <h3>Experience Timeless Elegance</h3>
+                <p>Our carefully curated spaces blend modern luxury with timeless design. Explore our visual journey through the finest accommodations, dining experiences, and amenities that Serenity Haven has to offer.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <h2 class="section-title" data-aos="fade-up">Explore Our Beautiful Spaces</h2>
+        
+        <div class="gallery-filter" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="rooms">Rooms & Suites</button>
+            <button class="filter-btn" data-filter="dining">Dining</button>
+            <button class="filter-btn" data-filter="spa">Spa & Wellness</button>
+            <button class="filter-btn" data-filter="amenities">Amenities</button>
+            <button class="filter-btn" data-filter="events">Events</button>
+        </div>
+        
+        <div class="gallery-grid" id="gallery">
+            <!-- Rooms Gallery Items -->
+            <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="100">
+                <img src="/images/img 4.webp" alt="Presidential Suite">
+                <div class="gallery-overlay">
+                    <h3>Presidential Suite</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="150">
+                <img src="/images/img 5.webp" alt="Executive Suite">
+                <div class="gallery-overlay">
+                    <h3>Executive Suite</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="200">
+                <img src="/images/img 6.webp" alt="Deluxe Room">
+                <div class="gallery-overlay">
+                    <h3>Deluxe Room</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="250">
+                <img src="/images/img 7.webp" alt="Family Suite">
+                <div class="gallery-overlay">
+                    <h3>Family Suite</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dining Gallery Items -->
+            <div class="gallery-item" data-category="dining" data-aos="fade-up" data-aos-delay="100">
+                <img src="/images/img 22.jpg" alt="Fine Dining Restaurant">
+                <div class="gallery-overlay">
+                    <h3>The Elegant Restaurant</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="dining" data-aos="fade-up" data-aos-delay="150">
+                <img src="/images/img 24.jpg" alt="Rooftop Bar">
+                <div class="gallery-overlay">
+                    <h3>Skyline Lounge</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="dining" data-aos="fade-up" data-aos-delay="200">
+                <img src="/images/img 25.jpg" alt="Breakfast Buffet">
+                <div class="gallery-overlay">
+                    <h3>Breakfast Experience</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spa & Wellness Gallery Items -->
+            <div class="gallery-item" data-category="spa" data-aos="fade-up" data-aos-delay="100">
+                <img src="/images/img 23.jpg" alt="Spa Treatment Room">
+                <div class="gallery-overlay">
+                    <h3>Tranquility Spa</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="spa" data-aos="fade-up" data-aos-delay="150">
+                <img src="/images/indoor pool.jpg" alt="Indoor Pool">
+                <div class="gallery-overlay">
+                    <h3>Infinity Pool</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="spa" data-aos="fade-up" data-aos-delay="200">
+                <img src="/images/fitness center.jpg" alt="Fitness Center">
+                <div class="gallery-overlay">
+                    <h3>Modern Fitness Center</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Amenities Gallery Items -->
+            <div class="gallery-item" data-category="amenities" data-aos="fade-up" data-aos-delay="100">
+                <img src="/images/hotel lobby.jpg" alt="Hotel Lobby">
+                <div class="gallery-overlay">
+                    <h3>Grand Lobby</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="amenities" data-aos="fade-up" data-aos-delay="150">
+                <img src="/images/garden.jpg" alt="Hotel Garden">
+                <div class="gallery-overlay">
+                    <h3>Serenity Garden</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Events Gallery Items -->
+            <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="100">
+                <img src="/images/weddding setup.jpg" alt="Wedding Setup">
+                <div class="gallery-overlay">
+                    <h3>Elegant Wedding Venue</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="150">
+                <img src="/images/conference room.jpg" alt="Conference Room">
+                <div class="gallery-overlay">
+                    <h3>Executive Conference Room</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="200">
+                <img src="/images/banquet hall.jpg" alt="Banquet Hall">
+                <div class="gallery-overlay">
+                    <h3>Grand Ballroom</h3>
+                    <div class="view-btn">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Tour Section -->
+    <section class="virtual-tour" data-aos="fade-up">
+        <h2 class="section-title">Virtual Tour</h2>
+        <div class="virtual-tour-content">
+            <p>Experience Serenity Haven Hotel from the comfort of your home. Explore our luxurious rooms, elegant common areas, and world-class amenities through our immersive virtual tour.</p>
+            
+            <div class="virtual-tour-frame">
+                <div class="virtual-tour-placeholder">
+                    <div class="virtual-tour-icon">
+                        <i class="bi bi-360-degree"></i>
+                    </div>
+                    <h3>360° Virtual Tour Experience</h3>
+                    <p>Explore our hotel through an interactive virtual tour.</p>
+                    <button class="room-btn" style="margin-top: 20px;">Start Tour</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section" data-aos="fade-up">
+        <h2 class="section-title">Guest Experiences</h2>
+        
+        <div class="testimonial-slider">
+            <div class="testimonial">
+                <p class="testimonial-text">The attention to detail at Serenity Haven is remarkable. From the stunning architecture to the impeccable service, our stay was nothing short of perfection. The Presidential Suite exceeded all expectations with its breathtaking views and luxurious amenities.</p>
+                
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/100/100" alt="Guest Photo">
+                    <div class="author-info">
+                        <h4>Emily Johnson</h4>
+                        <p>Luxury Travel Enthusiast</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <h2>Experience Luxury Like Never Before</h2>
+        <p>Book your stay today and enjoy exclusive benefits including complimentary breakfast, spa credits, and personalized concierge service for a truly unforgettable experience.</p>
+        <button class="room-btn">Reserve Your Stay</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Luxury Hotel</h3>
+                <p>Experience the epitome of luxury and comfort in our meticulously designed accommodations located in the heart of the city.</p>
+                <p>123 Elegant Street<br>
+                   Luxury District, LX 12345<br>
+                   United States</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="#">Home</a>
+                <a href="#">Rooms & Suites</a>
+                <a href="#">Dining</a>
+                <a href="#">Spa & Wellness</a>
+                <a href="#">Gallery</a>
+                <a href="#">Contact</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="bi bi-telephone"></i> +1 (555) 123-4567</p>
+                <p><i class="bi bi-envelope"></i> info@luxuryhotel.com</p>
+                <p><i class="bi bi-clock"></i> Check-in: 3:00 PM<br>Check-out: 12:00 PM</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for exclusive offers and updates.</p>
+                <form>
+                    <input type="email" placeholder="Your email address" style="padding: 10px; width: 100%; margin-bottom: 10px; background: #333; border: 1px solid #444; color: white;">
+                    <button class="room-btn" style="width: 100%;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Luxury Hotel. All Rights Reserved.</p>
+        </div>
+    </footer>
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+
+<!-- AOS Animation Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- AOS Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<!-- Simplified Gallery Script -->
+<script src="js/Aos-animation.js"></script>
+<script src="js/roomavability.js"></script>
+<script src="js/gallery.js"></script>
+</body>
+</html>

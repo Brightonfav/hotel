@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Generator</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --background-color: #f5f7fa;
+            --text-color: #333;
+            --light-gray: #e0e0e0;
+            --correct-color: #66bb6a;
+            --incorrect-color: #ef5350;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: var(--primary-color);
+        }
+
+        #quiz-container, #results-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .options-list {
+            list-style-type: none;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: var(--light-gray);
+        }
+
+        .option-input {
+            margin-right: 10px;
+            width: auto;
+        }
+
+        .correct {
+            background-color: var(--correct-color);
+            color: white;
+        }
+
+        .incorrect {
+            background-color: var(--incorrect-color);
+            color: white;
+        }
+
+        .results-summary {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 1rem;
+        }
+
+        .result-item {
+            margin-bottom: 5px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            font-weight: 600;
+            color: var(--text-color);
+            opacity: 0.7;
+            width: auto;
+        }
+
+        .tab.active {
+            color: var(--secondary-color);
+            opacity: 1;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: var(--secondary-color);
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        #add-question-form {
+            display: none;
+        }
+
+        .answer-highlight {
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .answer-correct {
+            background-color: rgba(102, 187, 106, 0.2);
+        }
+
+        .answer-incorrect {
+            background-color: rgba(239, 83, 80, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Quiz Generator</h1>
+
+        <div class="tab-container">
+            <button class="tab active" data-tab="generate">Generate Quiz</button>
+            <button class="tab" data-tab="create">Create Questions</button>
+        </div>
+
+        <div id="generate-tab" class="tab-content active">
+            <div class="card">
+                <h2>Configure Your Quiz</h2>
+                <div class="form-group">
+                    <label for="topic">Select Topic:</label>
+                    <select id="topic">
+                        <!-- Will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="difficulty">Select Difficulty:</label>
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="difficult">Difficult</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="question-count">Number of Questions:</label>
+                    <input type="number" id="question-count" min="1" max="10" value="5">
+                </div>
+                <button id="generate-btn">Generate Quiz</button>
+            </div>
+
+            <div id="loading">
+                <div class="spinner"></div>
+                <p>Generating your quiz...</p>
+            </div>
+
+            <div id="quiz-container">
+                <div class="card">
+                    <h2 id="quiz-title">Quiz Title</h2>
+                    <p id="quiz-description">Quiz description will appear here.</p>
+                    <div id="questions-container">
+                        <!-- Questions will be inserted here -->
+                    </div>
+                    <button id="submit-quiz">Submit Answers</button>
+                </div>
+            </div>
+
+            <div id="results-container">
+                <div class="card">
+                    <div class="results-summary">
+                        <div>
+                            <div class="score-label">Your Score</div>
+                            <div class="score-display"><span id="score-percentage">0</span>%</div>
+                        </div>
+                        <div>
+                            <div id="score-fraction">0/0</div>
+                            <button id="new-quiz-btn">New Quiz</button>
+                        </div>
+                    </div>
+                    <h2>Results Breakdown</h2>
+                    <div id="results-breakdown">
+                        <!-- Results details will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="create-tab" class="tab-content">
+            <div class="card">
+                <h2>Add New Content</h2>
+                <div class="form-group">
+                    <label for="create-action">What would you like to do?</label>
+                    <select id="create-action">
+                        <option value="add-question">Add a new question</option>
+                        <option value="create-topic">Create a new topic</option>
+                    </select>
+                </div>
+                
+                <div id="create-topic-form">
+                    <div class="form-group">
+                        <label for="new-topic-name">New Topic Name:</label>
+                        <input type="text" id="new-topic-name" placeholder="Enter a topic name">
+                    </div>
+                    <button id="create-topic-btn">Create Topic</button>
+                </div>
+
+                <div id="add-question-form">
+                    <div class="form-group">
+                        <label for="question-topic">Topic:</label>
+                        <select id="question-topic">
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="question-difficulty">Difficulty:</label>
+                        <select id="question-difficulty">
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="difficult">Difficult</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="question-text">Question:</label>
+                        <input type="text" id="question-text" placeholder="Enter your question">
+                    </div>
+                    <div class="form-group">
+                        <label>Options:</label>
+                        <input type="text" id="option1" placeholder="Option 1" class="option-input-field">
+                        <input type="text" id="option2" placeholder="Option 2" class="option-input-field">
+                        <input type="text" id="option3" placeholder="Option 3" class="option-input-field">
+                        <input type="text" id="option4" placeholder="Option 4" class="option-input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="correct-answer">Correct Answer:</label>
+                        <select id="correct-answer">
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                            <option value="option4">Option 4</option>
+                        </select>
+                    </div>
+                    <button id="add-question-btn">Add Question</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz Generator Class
+        class QuizGenerator {
+            constructor() {
+                this.topics = {
+                    history: {
+                        easy: [
+                            { question: "In what year did World War II end?", 
+                                options: ["1943", "1945", "1947", "1950"], 
+                                answer: "1945" },
+                            { question: "Who was the first President of the United States?", 
+                                options: ["Thomas Jefferson", "George Washington", "John Adams", "Alexander Hamilton"], 
+                                answer: "George Washington" },
+                            { question: "Which civilization built the pyramids at Giza?", 
+                                options: ["Roman", "Greek", "Egyptian", "Persian"], 
+                                answer: "Egyptian" }
+                        ],
+                        medium: [
+                            { question: "What was the name of the peace treaty that ended World War I?", 
+                                options: ["Treaty of Paris", "Treaty of London", "Treaty of Versailles", "Treaty of Rome"], 
+                                answer: "Treaty of Versailles" },
+                            { question: "Who was the leader of the Soviet Union during the Cuban Missile Crisis?", 
+                                options: ["Joseph Stalin", "Vladimir Lenin", "Nikita Khrushchev", "Leonid Brezhnev"], 
+                                answer: "Nikita Khrushchev" },
+                            { question: "Which European country was ruled by Francisco Franco from 1939 to 1975?", 
+                                options: ["Italy", "Portugal", "Spain", "Greece"], 
+                                answer: "Spain" }
+                        ],
+                        difficult: [
+                            { question: "In which year did the Taiping Rebellion begin?", 
+                                options: ["1830", "1851", "1867", "1875"], 
+                                answer: "1851" },
+                            { question: "Who was the last emperor of the Byzantine Empire?", 
+                                options: ["Constantine XI", "Justinian I", "Leo III", "Basil II"], 
+                                answer: "Constantine XI" },
+                            { question: "The Treaty of Tordesillas divided newly discovered lands between which two countries?", 
+                                options: ["England and France", "Portugal and Spain", "Netherlands and England", "France and Spain"], 
+                                answer: "Portugal and Spain" }
+                        ]
+                    },
+                    science: {
+                        easy: [
+                            { question: "What is the chemical symbol for water?", 
+                                options: ["O2", "CO2", "H2O", "N2"], 
+                                answer: "H2O" },
+                            { question: "Which planet is closest to the Sun?", 
+                                options: ["Earth", "Venus", "Mars", "Mercury"], 
+                                answer: "Mercury" },
+                            { question: "What is the largest organ in the human body?", 
+                                options: ["Brain", "Heart", "Liver", "Skin"], 
+                                answer: "Skin" }
+                        ],
+                        medium: [
+                            { question: "What is the atomic number of carbon?", 
+                                options: ["4", "6", "8", "12"], 
+                                answer: "6" },
+                            { question: "Which subatomic particle has a positive charge?", 
+                                options: ["Electron", "Proton", "Neutron", "Quark"], 
+                                answer: "Proton" },
+                            { question: "What is the approximate speed of light in a vacuum?", 
+                                options: ["300,000 km/s", "150,000 km/s", "500,000 km/s", "1,000,000 km/s"], 
+                                answer: "300,000 km/s" }
+                        ],
+                        difficult: [
+                            { question: "What is the Henderson-Hasselbalch equation used to calculate?", 
+                                options: ["Momentum", "pH", "Temperature", "Quantum state"], 
+                                answer: "pH" },
+                            { question: "Which scientist proposed the theory of general relativity?", 
+                                options: ["Isaac Newton", "Niels Bohr", "Albert Einstein", "Stephen Hawking"], 
+                                answer: "Albert Einstein" },
+                            { question: "What is the primary function of the Golgi apparatus in cells?", 
+                                options: ["Energy production", "Protein modification and packaging", "DNA replication", "Cell division"], 
+                                answer: "Protein modification and packaging" }
+                        ]
+                    },
+                    literature: {
+                        easy: [
+                            { question: "Who wrote 'Romeo and Juliet'?", 
+                                options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"], 
+                                answer: "William Shakespeare" },
+                            { question: "What is the name of the wizard school in Harry Potter?", 
+                                options: ["Durmstrang", "Beauxbatons", "Ilvermorny", "Hogwarts"], 
+                                answer: "Hogwarts" },
+                            { question: "Who is the author of 'To Kill a Mockingbird'?", 
+                                options: ["Harper Lee", "F. Scott Fitzgerald", "Ernest Hemingway", "John Steinbeck"], 
+                                answer: "Harper Lee" }
+                        ],
+                        medium: [
+                            { question: "What is the name of the fictional town where '1984' takes place?", 
+                                options: ["London", "Oceania", "Airstrip One", "Eastasia"], 
+                                answer: "Airstrip One" },
+                            { question: "Who wrote 'One Hundred Years of Solitude'?", 
+                                options: ["Jorge Luis Borges", "Pablo Neruda", "Gabriel García Márquez", "Isabel Allende"], 
+                                answer: "Gabriel García Márquez" },
+                            { question: "Which play features the character Nora Helmer?", 
+                                options: ["A Doll's House", "Hedda Gabler", "An Enemy of the People", "Ghosts"], 
+                                answer: "A Doll's House" }
+                        ],
+                        difficult: [
+                            { question: "Who wrote the 'Winesburg, Ohio' collection of short stories?", 
+                                options: ["Sherwood Anderson", "Sinclair Lewis", "Willa Cather", "F. Scott Fitzgerald"], 
+                                answer: "Sherwood Anderson" },
+                            { question: "What literary movement was James Joyce associated with?", 
+                                options: ["Romanticism", "Modernism", "Naturalism", "Transcendentalism"], 
+                                answer: "Modernism" },
+                            { question: "In which century was 'The Tale of Genji' written?", 
+                                options: ["9th century", "11th century", "14th century", "17th century"], 
+                                answer: "11th century" }
+                        ]
+                    },
+                    technology: {
+                        easy: [
+                            { question: "What does CPU stand for?", 
+                                options: ["Central Processing Unit", "Computer Personal Unit", "Central Process Utility", "Core Processing Unit"], 
+                                answer: "Central Processing Unit" },
+                            { question: "Who founded Microsoft?", 
+                                options: ["Steve Jobs", "Bill Gates", "Mark Zuckerberg", "Jeff Bezos"], 
+                                answer: "Bill Gates" },
+                            { question: "What does HTML stand for?", 
+                                options: ["Hyper Text Markup Language", "High Tech Multi Language", "Hyper Transfer Mode Language", "Home Tool Markup Language"], 
+                                answer: "Hyper Text Markup Language" }
+                        ],
+                        medium: [
+                            { question: "Which programming language was developed by Google and is commonly used for Android development?", 
+                                options: ["Swift", "Kotlin", "Ruby", "PHP"], 
+                                answer: "Kotlin" },
+                            { question: "What technology is used to record cryptocurrency transactions?", 
+                                options: ["Digital wallets", "Mining", "Blockchain", "Encryption"], 
+                                answer: "Blockchain" },
+                            { question: "What does API stand for in programming?", 
+                                options: ["Application Programming Interface", "Applied Protocol Interface", "Automated Program Integration", "Accessible Program Input"], 
+                                answer: "Application Programming Interface" }
+                        ],
+                        difficult: [
+                            { question: "Which sorting algorithm has the best average-case performance?", 
+                                options: ["Bubble Sort", "Quick Sort", "Insertion Sort", "Selection Sort"], 
+                                answer: "Quick Sort" },
+                            { question: "What is the time complexity of binary search?", 
+                                options: ["O(n)", "O(n log n)", "O(log n)", "O(1)"], 
+                                answer: "O(log n)" },
+                            { question: "What does ACID stand for in database systems?", 
+                                options: ["Atomicity, Consistency, Isolation, Durability", "Authentication, Compression, Indexing, Durability", "Automation, Consistency, Integration, Development", "Assembly, Compilation, Interpretation, Debugging"], 
+                                answer: "Atomicity, Consistency, Isolation, Durability" }
+                        ]
+                    }
+                };
+            }
+
+            // Method to get all available topics
+            getTopics() {
+                return Object.keys(this.topics);
+            }
+
+            // Method to get available difficulty levels
+            getDifficultyLevels() {
+                return ["easy", "medium", "difficult"];
+            }
+
+            // Method to generate a quiz
+            generateQuiz(topic, difficulty, count = 5) {
+                // Validate inputs
+                if (!this.topics[topic]) {
+                    return { error: `Topic '${topic}' not available. Available topics: ${this.getTopics().join(', ')}` };
+                }
+                
+                if (!this.topics[topic][difficulty]) {
+                    return { error: `Difficulty '${difficulty}' not available. Available difficulties: ${this.getDifficultyLevels().join(', ')}` };
+                }
+                
+                // Get questions for the selected topic and difficulty
+                let availableQuestions = this.topics[topic][difficulty];
+                
+                // Check if we have enough questions
+                if (availableQuestions.length < count) {
+                    return { 
+                        warning: `Only ${availableQuestions.length} questions available for ${topic} at ${difficulty} difficulty. Generating all available questions.`,
+                        quiz: {
+                            topic: topic,
+                            difficulty: difficulty,
+                            questionCount: availableQuestions.length,
+                            questions: availableQuestions
+                        }
+                    };
+                }
+                
+                // Randomly select questions
+                let selectedQuestions = [];
+                let questionIndices = new Set();
+                
+                while (questionIndices.size < count) {
+                    const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+                    if (!questionIndices.has(randomIndex)) {
+                        questionIndices.add(randomIndex);
+                        selectedQuestions.push(availableQuestions[randomIndex]);
+                    }
+                }
+                
+                return {
+                    quiz: {
+                        topic: topic,
+                        difficulty: difficulty,
+                        questionCount: selectedQuestions.length,
+                        questions: selectedQuestions
+                    }
+                };
+            }
+            
+            // Method to check answers for a quiz
+            checkAnswers(quiz, userAnswers) {
+                if (!quiz.questions || !Array.isArray(userAnswers) || quiz.questions.length !== userAnswers.length) {
+                    return { error: "Invalid quiz or answers format" };
+                }
+                
+                let results = [];
+                let correctCount = 0;
+                
+                for (let i = 0; i < quiz.questions.length; i++) {
+                    const question = quiz.questions[i];
+                    const userAnswer = userAnswers[i];
+                    const isCorrect = question.answer === userAnswer;
+                    
+                    if (isCorrect) correctCount++;
+                    
+                    results.push({
+                        question: question.question,
+                        userAnswer: userAnswer,
+                        correctAnswer: question.answer,
+                        isCorrect: isCorrect
+                    });
+                }
+                
+                return {
+                    totalQuestions: quiz.questions.length,
+                    correctCount: correctCount,
+                    score: Math.round((correctCount / quiz.questions.length) * 100),
+                    details: results
+                };
+            }
+            
+            // Method to add new questions to the database
+            addQuestion(topic, difficulty, questionObj) {
+                // Create topic if it doesn't exist
+                if (!this.topics[topic]) {
+                    this.topics[topic] = { easy: [], medium: [], difficult: [] };
+                }
+                
+                // Create difficulty level if it doesn't exist
+                if (!this.topics[topic][difficulty]) {
+                    this.topics[topic][difficulty] = [];
+                }
+                
+                // Validate question object structure
+                if (!questionObj.question || !questionObj.options || !Array.isArray(questionObj.options) || 
+                    questionObj.options.length < 2 || !questionObj.answer) {
+                    return { error: "Invalid question format. Needs question, options array, and answer." };
+                }
+                
+                // Check if answer is in options
+                if (!questionObj.options.includes(questionObj.answer)) {
+                    return { error: "The answer must be included in the options." };
+                }
+                
+                // Add the question
+                this.topics[topic][difficulty].push(questionObj);
+                
+                return { 
+                    success: true, 
+                    message: `Question added to ${topic} (${difficulty})`,
+                    questionCount: this.topics[topic][difficulty].length
+                };
+            }
+            
+            // Method to create a custom topic
+            createTopic(topicName) {
+                if (this.topics[topicName]) {
+                    return { error: `Topic '${topicName}' already exists` };
+                }
+                
+                this.topics[topicName] = {
+                    easy: [],
+                    medium: [],
+                    difficult: []
+                };
+                
+                return { 
+                    success: true, 
+                    message: `Topic '${topicName}' created successfully`,
+                    availableTopics: this.getTopics()
+                };
+            }
+        }
+
+        // Initialize the quiz generator
+        const quizGen = new QuizGenerator();
+        let currentQuiz = null;
+
+        // DOM Elements
+        const topicSelect = document.getElementById('topic');
+        const difficultySelect = document.getElementById('difficulty');
+        const questionCountInput = document.getElementById('question-count');
+        const generateBtn = document.getElementById('generate-btn');
+        const quizContainer = document.getElementById('quiz-container');
+        const loadingIndicator = document.getElementById('loading');
+        const quizTitle = document.getElementById('quiz-title');
+        const quizDescription = document.getElementById('quiz-description');
+        const questionsContainer = document.getElementById('questions-container');
+        const submitQuizBtn = document.getElementById('submit-quiz');
+        const resultsContainer = document.getElementById('results-container');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreFraction = document.getElementById('score-fraction');
+        const resultsBreakdown = document.getElementById('results-breakdown');
+        const newQuizBtn = document.getElementById('new-quiz-btn');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const createActionSelect = document.getElementById('create-action');
+        const createTopicForm = document.getElementById('create-topic-form');
+        const addQuestionForm = document.getElementById('add-question-form');
+        const questionTopicSelect = document.getElementById('question-topic');
+        const newTopicNameInput = document.getElementById('new-topic-name');
+        const createTopicBtn = document.getElementById('create-topic-btn');
+        const addQuestionBtn = document.getElementById('add-question-btn');
+        const questionText = document.getElementById('question-text');
+        const option1 = document.getElementById('option1');
+        const option2 = document.getElementById('option2');
+        const option3 = document.getElementById('option3');
+        const option4 = document.getElementById('option4');
+        const correctAnswer = document.getElementById('correct-answer');
+
+        // Initialize tabs
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Initialize topic selects
+        function populateTopicSelects() {
+            const topics = quizGen.getTopics();
+            
+            // Clear existing options
+            topicSelect.innerHTML = '';
+            questionTopicSelect.innerHTML = '';
+            
+            // Add new options
+            topics.forEach(topic => {
+                const option1 = document.createElement('option');
+                option1.value = topic;
+                option1.textContent = topic.charAt(0).toUpperCase() + topic.slice(1);
+                topicSelect.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = topic;
+                option2.textContent = topic.charAt(0).toUpperCase() + topic.slice(1);
+                questionTopicSelect.appendChild(option2);
+            });
+        }
+
+        // Switch between create action forms
+        createActionSelect.addEventListener('change', () => {
+            const action = createActionSelect.value;
+            if (action === 'add-question') {
+                addQuestionForm.style.display = 'block';
+                createTopicForm.style.display = 'none';
+            } else {
+                addQuestionForm.style.display = 'none';
+                createTopicForm.style.display = 'block';
+            }
+        });
+
+        // Create a new topic
+        createTopicBtn.addEventListener('click', () => {
+            const topicName = newTopicNameInput.value.trim().toLowerCase();
+            
+            if (!topicName) {
+                alert('Please enter a topic name');
+                return;
+            }
+            
+            const result = quizGen.createTopic(topicName);
+            
+            if (result.error) {
+                alert(result.error);
+            } else {
+                alert(result.message);
+                newTopicNameInput.value = '';
+                
+                // Update topic selects
+                populateTopicSelects();
+            }
+        });
+
+        // Add a new question
+        addQuestionBtn.addEventListener('click', () => {
+            const topic = questionTopicSelect.value;
+            const difficulty = document.getElementById('question-difficulty').value;
+            const question = questionText.value.trim();
+            
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+            
+            const options = [
+                option1.value.trim(),
+                option2.value.trim(),
+                option3.value.trim(),
+                option4.value.trim()
+            ].filter(opt => opt !== '');
+            
+            if (
