@@ -10,37 +10,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8d7j3z5l5e5c5e5e5e5e5e5e5e5e5e5e5e" crossorigin="anonymous">
 </head>
 <body>
-    <!-- Header with navigation -->
-    <header>
-        <div class="top-bar">
-            <div class="contact-info">
-                <span><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</span>
-                <span><i class="bi bi-envelope-fill"></i> info@serenityhavenhotel.com</span>
-            </div>
-            <div class="social-icons">
-                <a href="#"><i class="bi bi-facebook"></i></a>
-                <a href="#"><i class="bi bi-instagram"></i></a>
-                <a href="#"><i class="bi bi-twitter-x"></i></a>
-            </div>
+   <!-- Header with navigation -->
+<header>
+    <div class="top-bar">
+        <div class="contact-info">
+            <span><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</span>
+            <span><i class="bi bi-envelope-fill"></i> info@serenityhavenhotel.com</span>
         </div>
-        <div class="nav-container">
-            <a href="index.html" class="logo">Serenity <span>Haven</span></a>
-            <button class="mobile-menu-btn"><i class="bi bi-list"></i></button>
-            <nav id="main-nav">
-                <ul>
-                    <li><a href="#" class="nav-link" data-section="hero">Home</a></li>
-                    <li><a href="#about" class="nav-link" data-section="about">About</a></li>
-                    <li><a href="#rooms-preview" class="nav-link" data-section="rooms-preview">Rooms</a></li>
-                    <li><a href="#amenities" class="nav-link" data-section="amenities">Amenities</a></li>
-                    <li><a href="#testimonials" class="nav-link" data-section="testimonials">Testimonials</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-            <button class="booking-btn" id="nav-book-btn">Book Now</button>
+        <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
         </div>
-    </header>
-
+    </div>
+    <div class="nav-container">
+        <a href="index.html" class="logo">Serenity <span>Haven</span></a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="bi bi-list"></i>
+        </button>
+        <nav id="main-nav">
+            <!-- Close button for mobile -->
+            <button class="mobile-close-btn" id="mobile-close-btn">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <ul>
+                <li><a href="#" class="nav-link" data-section="hero">Home</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+                <li><a href="#rooms-preview" class="nav-link" data-section="rooms-preview">Rooms</a></li>
+                <li><a href="#amenities" class="nav-link" data-section="amenities">Amenities</a></li>
+                <li><a href="#testimonials" class="nav-link" data-section="testimonials">Testimonials</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <!-- Mobile booking button -->
+            <button class="mobile-booking-btn" id="mobile-book-btn">Book Now</button>
+        </nav>
+        <button class="booking-btn" id="nav-book-btn">Book Now</button>
+    </div>
+</header>
+<!-- Overlay for mobile menu -->
+<div class="nav-overlay" id="nav-overlay"></div>
     <!-- Hero section with image slider -->
     <section class="hero">
         <div class="slide" style="background-image: url('images/img\ 1.webp')"></div>

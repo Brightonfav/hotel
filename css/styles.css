@@ -488,3 +488,135 @@ footer {
         font-size: 30px;
     }
 }
+
+/* Add these mobile navigation styles to your existing CSS */
+
+/* Mobile close button - hidden by default */
+.mobile-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+}
+
+/* Mobile booking button inside nav */
+.mobile-booking-btn {
+    display: none;
+    background-color: #d4af37;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: calc(100% - 40px);
+    margin: 20px;
+}
+
+/* Overlay for mobile menu */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Update your existing mobile responsive section */
+@media (max-width: 768px) {
+    /* Your existing mobile styles remain the same, just add these: */
+    
+    /* Hide desktop booking button, show mobile menu button */
+    .booking-btn {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    /* Mobile navigation styles */
+    nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background-color: #1a1a1a;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    }
+    
+    nav.active {
+        left: 0;
+    }
+    
+    /* Show close button and mobile booking button when menu is active */
+    nav.active .mobile-close-btn {
+        display: block;
+    }
+    
+    nav.active .mobile-booking-btn {
+        display: block;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        height: 100%;
+        overflow-y: auto;
+    }
+    
+    nav ul li {
+        margin: 0;
+        border-bottom: 1px solid #333;
+    }
+    
+    nav ul li a {
+        display: block;
+        padding: 20px 0;
+        font-size: 18px;
+    }
+    
+    /* Keep nav-container as row for mobile menu button positioning */
+    .nav-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Mobile responsive adjustments for top bar */
+    .top-bar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .contact-info span {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        width: 90%;
+    }
+}
