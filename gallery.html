@@ -122,6 +122,53 @@
         .booking-btn:hover {
             background-color: #c4a030;
         }
+
+        /* Mobile close button - hidden by default */
+.mobile-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+}
+
+/* Mobile booking button inside nav */
+.mobile-booking-btn {
+    display: none;
+    background-color: #d4af37;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: calc(100% - 40px);
+    margin: 20px;
+}
+
+/* Overlay for mobile menu */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
         
         /* Page Banner */
         .page-banner {
@@ -559,7 +606,7 @@
                 display: block;
                 position: absolute;
                 right: 5%;
-                top: 20px;
+                top: 40px;
             }
             
             nav {
@@ -656,7 +703,7 @@
             <button class="booking-btn" id="nav-book-btn">Book Now</button>
         </div>
     </header>
-
+    <div class="nav-overlay" id="nav-overlay"></div>
     <!-- Page Banner -->
     <section class="page-banner" data-aos="fade-down">
         <h1>Our Gallery</h1>
