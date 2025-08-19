@@ -556,45 +556,46 @@
         <p>At Serenity Haven, we offer a wide range of amenities and services designed to enhance your stay and create unforgettable memories. From our world-class spa to our gourmet restaurants, every detail has been carefully considered to ensure your complete satisfaction and comfort.</p>
     </section>
 
-     <!-- Room Availability Checker Modal -->
-     <div id="availability-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
-        <div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="color: #333; margin: 0;">Check Availability</h2>
-                <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
-            </div>
-            <form id="availability-form">
-                <div style="margin-bottom: 15px;">
-                    <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in Date:</label>
-                    <input type="date" id="check-in" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out Date:</label>
-                    <input type="date" id="check-out" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of Guests:</label>
-                    <select id="guests" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                        <option value="1">1 Guest</option>
-                        <option value="2" selected>2 Guests</option>
-                        <option value="3">3 Guests</option>
-                        <option value="4">4 Guests</option>
-                        <option value="5">5+ Guests</option>
-                    </select>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room Type:</label>
-                    <select id="room-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                        <option value="any" selected>Any Available</option>
-                        <option value="deluxe">Deluxe Room</option>
-                        <option value="executive">Executive Suite</option>
-                        <option value="presidential">Presidential Suite</option>
-                    </select>
-                </div>
-                <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
-            </form>
+    <!-- Room Availability Checker Modal -->
+<div id="availability-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="color: #333; margin: 0;">Check Availability</h2>
+            <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
         </div>
+        <form id="availability-form">
+            <div style="margin-bottom: 15px;">
+                <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in Date:</label>
+                <input type="date" id="check-in" name="check-in" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out Date:</label>
+                <input type="date" id="check-out" name="check-out" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of Guests:</label>
+                <select id="guests" name="guests" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    <option value="1">1 Guest</option>
+                    <option value="2" selected>2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5+ Guests</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room Type:</label>
+                <select id="room-type" name="room-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    <option value="any" selected>Any Available</option>
+                    <option value="deluxe">Deluxe Room</option>
+                    <option value="executive">Executive Suite</option>
+                    <option value="presidential">Presidential Suite</option>
+                </select>
+            </div>
+            <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
+        </form>
     </div>
+</div>
+
     
     <!-- Featured Amenity -->
     <section class="featured-amenity" data-aos="fade-up">

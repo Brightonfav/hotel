@@ -114,13 +114,16 @@ class RoomAvailabilityChecker {
     handleCheckInChange(event) {
         if (!this.checkOutInput) return;
 
-        const newMinDate = new Date(event.target.value);
+        const newMinDate = new Date(event.target.value + 'T00:00:00');
         newMinDate.setDate(newMinDate.getDate() + 1);
         
         this.checkOutInput.min = this.formatDate(newMinDate);
         
         // If check-out is before new min date, update it
-        if (new Date(this.checkOutInput.value) <= new Date(event.target.value)) {
+        const checkOutDate = new Date(this.checkOutInput.value + 'T00:00:00');
+        const checkInDate = new Date(event.target.value + 'T00:00:00');
+        
+        if (checkOutDate <= checkInDate) {
             this.checkOutInput.value = this.formatDate(newMinDate);
         }
     }
@@ -162,6 +165,15 @@ class RoomAvailabilityChecker {
         const checkOut = formData.get('check-out');
         const guests = formData.get('guests');
 
+        // Debug: Log the form data
+        console.log('Form data:', { checkIn, checkOut, guests });
+
+        // Validate that we got the data
+        if (!checkIn || !checkOut) {
+            alert('Please select both check-in and check-out dates.');
+            return;
+        }
+
         // Validate dates
         if (!this.validateDates(checkIn, checkOut)) {
             return;
@@ -176,21 +188,39 @@ class RoomAvailabilityChecker {
 
     /**
      * Validate check-in and check-out dates
-     * @param {string} checkIn - Check-in date string
-     * @param {string} checkOut - Check-out date string
+     * @param {string} checkIn - Check-in date string (YYYY-MM-DD)
+     * @param {string} checkOut - Check-out date string (YYYY-MM-DD)
      * @returns {boolean} Whether dates are valid
      */
     validateDates(checkIn, checkOut) {
-        const checkInDate = new Date(checkIn);
-        const checkOutDate = new Date(checkOut);
+        // Parse dates reliably by creating local dates
+        // Adding 'T00:00:00' ensures we get local timezone midnight
+        const checkInDate = new Date(checkIn + 'T00:00:00');
+        const checkOutDate = new Date(checkOut + 'T00:00:00');
+        
+        // Get today's date at midnight local time
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
+        // Debug logging
+        console.log('Date validation:', {
+            checkIn,
+            checkOut,
+            checkInDate: checkInDate.toDateString(),
+            checkOutDate: checkOutDate.toDateString(),
+            today: today.toDateString(),
+            checkInTime: checkInDate.getTime(),
+            todayTime: today.getTime(),
+            isPast: checkInDate < today
+        });
+
+        // Check if check-in is in the past
         if (checkInDate < today) {
             alert('Check-in date cannot be in the past.');
             return false;
         }
 
+        // Check if check-out is after check-in
         if (checkOutDate <= checkInDate) {
             alert('Check-out date must be after check-in date.');
             return false;
@@ -216,7 +246,7 @@ class RoomAvailabilityChecker {
     resetFormState() {
         const submitBtn = this.availabilityForm.querySelector('button[type="submit"]');
         if (submitBtn) {
-            submitBtn.textContent = 'Check Availability';
+            submitBtn.textContent = 'Search Availability';
             submitBtn.disabled = false;
         }
     }
