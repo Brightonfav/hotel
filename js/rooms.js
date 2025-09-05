@@ -8,22 +8,22 @@
          <div class="gallery-modal">
              <div class="gallery-content">
                  <div class="gallery-slide active">
-                     <img src="images/img 7.webp" alt="Room Gallery">
+                     <img src="images/img-7.webp" alt="Room Gallery">
                  </div>
                  <div class="gallery-slide">
-                     <img src="images/img 8.webp" alt="Room Gallery">
+                     <img src="images/img-8.webp" alt="Room Gallery">
                  </div>
                  <div class="gallery-slide">
-                     <img src="images/img 9.webp" alt="Room Gallery">
+                     <img src="images/img-9.webp" alt="Room Gallery">
                  </div>
              </div>
              <button class="gallery-close"><i class="bi bi-x-lg"></i></button>
              <button class="gallery-nav gallery-prev"><i class="bi bi-chevron-left"></i></button>
              <button class="gallery-nav gallery-next"><i class="bi bi-chevron-right"></i></button>
              <div class="gallery-controls">
-                 <img src="images/img 7.webp" class="gallery-thumbnail active" data-index="0">
-                 <img src="images/img 8.webp" class="gallery-thumbnail" data-index="1">
-                 <img src="images/img 9.webp" class="gallery-thumbnail" data-index="2">
+                 <img src="images/img-7.webp" class="gallery-thumbnail active" data-index="0">
+                 <img src="images/img-8.webp" class="gallery-thumbnail" data-index="1">
+                 <img src="images/img-9.webp" class="gallery-thumbnail" data-index="2">
              </div>
          </div>
      `;
