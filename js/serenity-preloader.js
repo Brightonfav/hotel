@@ -621,6 +621,61 @@ window.initSerenityPreloader = initSerenityPreloader;
 
 console.log("Serenity Haven Universal Preloader script loaded successfully");
 
+
+// Add this debug code to the END of your serenity-preloader.js file
+// This will help identify why the preloader isn't showing
+
+// Debug logging
+console.log("=== PRELOADER DEBUG INFO ===");
+console.log("Document ready state:", document.readyState);
+console.log("Window location:", window.location.href);
+console.log("Page type detected:", getPageType());
+console.log("Preloader element exists:", !!document.getElementById('serenity-preloader'));
+
+// Force preloader initialization for GitHub Pages
+function forcePreloaderInit() {
+    console.log("Force initializing preloader...");
+    
+    // Remove any existing preloader first
+    const existingPreloader = document.getElementById('serenity-preloader');
+    if (existingPreloader) {
+        existingPreloader.remove();
+        console.log("Removed existing preloader");
+    }
+    
+    // Create new preloader instance
+    new SerenityPreloader();
+    console.log("New preloader created");
+}
+
+// Multiple initialization attempts for different scenarios
+if (document.readyState === 'loading') {
+    console.log("Document still loading - setting up event listeners");
+    document.addEventListener('DOMContentLoaded', forcePreloaderInit);
+} else {
+    console.log("Document already loaded - initializing immediately");
+    forcePreloaderInit();
+}
+
+// Fallback: Try again after a short delay
+setTimeout(() => {
+    const preloader = document.getElementById('serenity-preloader');
+    if (!preloader) {
+        console.log("Preloader not found after timeout - forcing initialization");
+        forcePreloaderInit();
+    } else {
+        console.log("Preloader exists after timeout check");
+    }
+}, 100);
+
+// Another fallback for slow connections
+setTimeout(() => {
+    const preloader = document.getElementById('serenity-preloader');
+    if (!preloader) {
+        console.log("Final fallback - creating preloader");
+        forcePreloaderInit();
+    }
+}, 500);
 // ===== USAGE EXAMPLES =====
 /*
 
