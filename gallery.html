@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery - Serenity Haven Hotel</title>
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
     <!-- AOS Animation Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <!-- LightGallery Plugin -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css">
-    <!-- Additional LightGallery Plugin CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-zoom.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-thumbnail.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-zoom.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lg-thumbnail.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/gallery.css">
+    <script src="./js/serenity-preloader.js"></script>
 </head>
-<script src="./js/serenity-preloader.js"></script>
+
 <body>
     <!-- Header with navigation -->
     <header>
@@ -34,20 +36,33 @@
         </div>
         <div class="nav-container">
             <a href="index.html" class="logo">Serenity <span>Haven</span></a>
-            <button class="mobile-menu-btn"><i class="bi bi-list"></i></button>
-            <nav id="main-nav">
+
+            <button class="mobile-menu-btn">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <nav>
+                <button class="mobile-close-btn">
+                    <i class="bi bi-x-lg"></i>
+                </button>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="rooms.html">Rooms & Suites</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="rooms.html">Rooms</a></li>
                     <li><a href="amenities.html">Amenities</a></li>
                     <li><a href="gallery.html" class="active">Gallery</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
+                <button class="mobile-booking-btn">Book Now</button>
             </nav>
-            <button class="booking-btn" id="nav-book-btn">Book Now</button>
+
+            <button class="booking-btn">Book Now</button>
         </div>
     </header>
-    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <!-- Overlay for mobile menu -->
+    <div class="nav-overlay"></div>
+
     <!-- Page Banner -->
     <section class="page-banner" data-aos="fade-down">
         <h1>Our Gallery</h1>
@@ -57,54 +72,68 @@
             <li>Gallery</li>
         </ul>
     </section>
+
     <!-- Room Availability Checker Modal -->
-<div id="availability-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
-    <div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="color: #333; margin: 0;">Check Availability</h2>
-            <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+    <div id="availability-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center;">
+        <div
+            style="background-color: white; padding: 30px; border-radius: 4px; max-width: 500px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #333; margin: 0; font-size: 1.5rem;">Check Availability</h2>
+                <button id="close-modal"
+                    style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+            </div>
+            <form id="availability-form">
+                <div style="margin-bottom: 15px;">
+                    <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in
+                        Date:</label>
+                    <input type="date" id="check-in" name="check-in"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out
+                        Date:</label>
+                    <input type="date" id="check-out" name="check-out"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of
+                        Guests:</label>
+                    <select id="guests" name="guests"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5+ Guests</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room
+                        Type:</label>
+                    <select id="room-type" name="room-type"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                        <option value="any" selected>Any Available</option>
+                        <option value="deluxe">Deluxe Room</option>
+                        <option value="executive">Executive Suite</option>
+                        <option value="presidential">Presidential Suite</option>
+                    </select>
+                </div>
+                <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
+            </form>
         </div>
-        <form id="availability-form">
-            <div style="margin-bottom: 15px;">
-                <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in Date:</label>
-                <input type="date" id="check-in" name="check-in" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out Date:</label>
-                <input type="date" id="check-out" name="check-out" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of Guests:</label>
-                <select id="guests" name="guests" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                    <option value="1">1 Guest</option>
-                    <option value="2" selected>2 Guests</option>
-                    <option value="3">3 Guests</option>
-                    <option value="4">4 Guests</option>
-                    <option value="5">5+ Guests</option>
-                </select>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room Type:</label>
-                <select id="room-type" name="room-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                    <option value="any" selected>Any Available</option>
-                    <option value="deluxe">Deluxe Room</option>
-                    <option value="executive">Executive Suite</option>
-                    <option value="presidential">Presidential Suite</option>
-                </select>
-            </div>
-            <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
-        </form>
     </div>
-</div>
 
 
     <!-- Featured Gallery Section -->
     <section class="featured-gallery" data-aos="fade-up">
         <div class="featured-slider">
-            <img src="/images/img-16.jpg" alt="Luxury Hotel Exterior">
+            <img src="images/img-16.jpg" alt="Luxury Hotel Exterior">
             <div class="featured-caption">
                 <h3>Experience Timeless Elegance</h3>
-                <p>Our carefully curated spaces blend modern luxury with timeless design. Explore our visual journey through the finest accommodations, dining experiences, and amenities that Serenity Haven has to offer.</p>
+                <p>Our carefully curated spaces blend modern luxury with timeless design. Explore our visual journey
+                    through the finest accommodations, dining experiences, and amenities that Serenity Haven has to
+                    offer.</p>
             </div>
         </div>
     </section>
@@ -112,7 +141,7 @@
     <!-- Gallery Section -->
     <section class="gallery-section">
         <h2 class="section-title" data-aos="fade-up">Explore Our Beautiful Spaces</h2>
-        
+
         <div class="gallery-filter" data-aos="fade-up">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="rooms">Rooms & Suites</button>
@@ -121,11 +150,11 @@
             <button class="filter-btn" data-filter="amenities">Amenities</button>
             <button class="filter-btn" data-filter="events">Events</button>
         </div>
-        
+
         <div class="gallery-grid" id="gallery">
             <!-- Rooms Gallery Items -->
             <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="100">
-                <img src="./images/img-4.webp" alt="Presidential Suite">
+                <img src="images/img-4.webp" alt="Presidential Suite">
                 <div class="gallery-overlay">
                     <h3>Presidential Suite</h3>
                     <div class="view-btn">
@@ -133,9 +162,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="150">
-                <img src="./images/img-5.webp" alt="Executive Suite">
+                <img src="images/img-5.webp" alt="Executive Suite">
                 <div class="gallery-overlay">
                     <h3>Executive Suite</h3>
                     <div class="view-btn">
@@ -143,9 +172,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="200">
-                <img src="./images/img-6.webp" alt="Deluxe Room">
+                <img src="images/img-6.webp" alt="Deluxe Room">
                 <div class="gallery-overlay">
                     <h3>Deluxe Room</h3>
                     <div class="view-btn">
@@ -153,9 +182,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="rooms" data-aos="fade-up" data-aos-delay="250">
-                <img src="./images/img-7.webp" alt="Family Suite">
+                <img src="images/img-7.webp" alt="Family Suite">
                 <div class="gallery-overlay">
                     <h3>Family Suite</h3>
                     <div class="view-btn">
@@ -163,10 +192,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Dining Gallery Items -->
             <div class="gallery-item" data-category="dining" data-aos="fade-up" data-aos-delay="100">
-                <img src="./images/img-22.jpg" alt="Fine Dining Restaurant">
+                <img src="images/img-22.jpg" alt="Fine Dining Restaurant">
                 <div class="gallery-overlay">
                     <h3>The Elegant Restaurant</h3>
                     <div class="view-btn">
@@ -174,9 +203,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="dining" data-aos="fade-up" data-aos-delay="150">
-                <img src="./images/img-24.jpg" alt="Rooftop Bar">
+                <img src="images/img-24.jpg" alt="Rooftop Bar">
                 <div class="gallery-overlay">
                     <h3>Skyline Lounge</h3>
                     <div class="view-btn">
@@ -184,9 +213,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="dining" data-aos="fade-up" data-aos-delay="200">
-                <img src="./images/img-25.jpg" alt="Breakfast Buffet">
+                <img src="images/img-25.jpg" alt="Breakfast Buffet">
                 <div class="gallery-overlay">
                     <h3>Breakfast Experience</h3>
                     <div class="view-btn">
@@ -194,10 +223,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Spa & Wellness Gallery Items -->
             <div class="gallery-item" data-category="spa" data-aos="fade-up" data-aos-delay="100">
-                <img src="./images/img-23.jpg" alt="Spa Treatment Room">
+                <img src="images/img-23.jpg" alt="Spa Treatment Room">
                 <div class="gallery-overlay">
                     <h3>Tranquility Spa</h3>
                     <div class="view-btn">
@@ -205,9 +234,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="spa" data-aos="fade-up" data-aos-delay="150">
-                <img src="./images/indoor-pool.jpg" alt="Indoor Pool">
+                <img src="images/indoor-pool.jpg" alt="Indoor Pool">
                 <div class="gallery-overlay">
                     <h3>Infinity Pool</h3>
                     <div class="view-btn">
@@ -215,9 +244,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="spa" data-aos="fade-up" data-aos-delay="200">
-                <img src="./images/fitness-center.jpg" alt="Fitness Center">
+                <img src="images/fitness-center.jpg" alt="Fitness Center">
                 <div class="gallery-overlay">
                     <h3>Modern Fitness Center</h3>
                     <div class="view-btn">
@@ -225,10 +254,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Amenities Gallery Items -->
             <div class="gallery-item" data-category="amenities" data-aos="fade-up" data-aos-delay="100">
-                <img src="./images/hotel-lobby.jpg" alt="Hotel Lobby">
+                <img src="images/hotel-lobby.jpg" alt="Hotel Lobby">
                 <div class="gallery-overlay">
                     <h3>Grand Lobby</h3>
                     <div class="view-btn">
@@ -236,9 +265,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="amenities" data-aos="fade-up" data-aos-delay="150">
-                <img src="./images/garden.jpg" alt="Hotel Garden">
+                <img src="images/garden.jpg" alt="Hotel Garden">
                 <div class="gallery-overlay">
                     <h3>Serenity Garden</h3>
                     <div class="view-btn">
@@ -246,10 +275,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Events Gallery Items -->
             <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="100">
-                <img src="./images/wedding-setup.jpg" alt="Wedding Setup">
+                <img src="images/wedding-setup.jpg" alt="Wedding Setup">
                 <div class="gallery-overlay">
                     <h3>Elegant Wedding Venue</h3>
                     <div class="view-btn">
@@ -257,9 +286,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="150">
-                <img src="./images/conference-room.jpg" alt="Conference Room">
+                <img src="images/conference-room.jpg" alt="Conference Room">
                 <div class="gallery-overlay">
                     <h3>Executive Conference Room</h3>
                     <div class="view-btn">
@@ -267,9 +296,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="200">
-                <img src="./images/banquet-hall.jpg" alt="Banquet Hall">
+                <img src="images/banquet-hall.jpg" alt="Banquet Hall">
                 <div class="gallery-overlay">
                     <h3>Grand Ballroom</h3>
                     <div class="view-btn">
@@ -284,8 +313,9 @@
     <section class="virtual-tour" data-aos="fade-up">
         <h2 class="section-title">Virtual Tour</h2>
         <div class="virtual-tour-content">
-            <p>Experience Serenity Haven Hotel from the comfort of your home. Explore our luxurious rooms, elegant common areas, and world-class amenities through our immersive virtual tour.</p>
-            
+            <p>Experience Serenity Haven Hotel from the comfort of your home. Explore our luxurious rooms, elegant
+                common areas, and world-class amenities through our immersive virtual tour.</p>
+
             <div class="virtual-tour-frame">
                 <div class="virtual-tour-placeholder">
                     <div class="virtual-tour-icon">
@@ -293,7 +323,7 @@
                     </div>
                     <h3>360° Virtual Tour Experience</h3>
                     <p>Explore our hotel through an interactive virtual tour.</p>
-                    <button class="room-btn" style="margin-top: 20px;">Start Tour</button>
+                    <button class="booking-btn" style="margin-top: 20px;">Start Tour</button>
                 </div>
             </div>
         </div>
@@ -302,13 +332,15 @@
     <!-- Testimonial Section -->
     <section class="testimonial-section" data-aos="fade-up">
         <h2 class="section-title">Guest Experiences</h2>
-        
+
         <div class="testimonial-slider">
             <div class="testimonial">
-                <p class="testimonial-text">The attention to detail at Serenity Haven is remarkable. From the stunning architecture to the impeccable service, our stay was nothing short of perfection. The Presidential Suite exceeded all expectations with its breathtaking views and luxurious amenities.</p>
-                
+                <p class="testimonial-text">The attention to detail at Serenity Haven is remarkable. From the stunning
+                    architecture to the impeccable service, our stay was nothing short of perfection. The Presidential
+                    Suite exceeded all expectations with its breathtaking views and luxurious amenities.</p>
+
                 <div class="testimonial-author">
-                    <img src="/api/placeholder/100/100" alt="Guest Photo">
+                    <img src="api/placeholder/100/100" alt="Guest Photo">
                     <div class="author-info">
                         <h4>Emily Johnson</h4>
                         <p>Luxury Travel Enthusiast</p>
@@ -321,67 +353,58 @@
     <!-- Call to Action Section -->
     <section class="cta">
         <h2>Experience Luxury Like Never Before</h2>
-        <p>Book your stay today and enjoy exclusive benefits including complimentary breakfast, spa credits, and personalized concierge service for a truly unforgettable experience.</p>
-        <button class="room-btn">Reserve Your Stay</button>
+        <p>Book your stay today and enjoy exclusive benefits including complimentary breakfast, spa credits, and
+            personalized concierge service for a truly unforgettable experience.</p>
+        <button class="booking-btn">Reserve Your Stay</button>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-column">
-                <h3>Luxury Hotel</h3>
-                <p>Experience the epitome of luxury and comfort in our meticulously designed accommodations located in the heart of the city.</p>
-                <p>123 Elegant Street<br>
-                   Luxury District, LX 12345<br>
-                   United States</p>
+                <h3>Serenity Haven</h3>
+                <p>123 Luxury Avenue</p>
+                <p>Cityville, State 12345</p>
+                <p>United States</p>
+                <p>Phone: +1 (555) 123-4567</p>
             </div>
-            
             <div class="footer-column">
                 <h3>Quick Links</h3>
-                <a href="#">Home</a>
-                <a href="#">Rooms & Suites</a>
-                <a href="#">Dining</a>
-                <a href="#">Spa & Wellness</a>
-                <a href="#">Gallery</a>
-                <a href="#">Contact</a>
+                <a href="index.html">Home</a>
+                <a href="rooms.html">Rooms & Suites</a>
+                <a href="amenities.html">Amenities</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact Us</a>
             </div>
-            
             <div class="footer-column">
-                <h3>Contact Us</h3>
-                <p><i class="bi bi-telephone"></i> +1 (555) 123-4567</p>
-                <p><i class="bi bi-envelope"></i> info@luxuryhotel.com</p>
-                <p><i class="bi bi-clock"></i> Check-in: 3:00 PM<br>Check-out: 12:00 PM</p>
+                <h3>Explore</h3>
+                <a href="#">Special Offers</a>
+                <a href="#">Events</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
             </div>
-            
             <div class="footer-column">
                 <h3>Newsletter</h3>
                 <p>Subscribe to our newsletter for exclusive offers and updates.</p>
-                <form>
-                    <input type="email" placeholder="Your email address" style="padding: 10px; width: 100%; margin-bottom: 10px; background: #333; border: 1px solid #444; color: white;">
-                    <button class="room-btn" style="width: 100%;">Subscribe</button>
+                <form onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Your email address"
+                        style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: 2px; border: none;">
+                    <button type="submit" class="booking-btn" style="width: 100%;">Subscribe</button>
                 </form>
             </div>
         </div>
-        
         <div class="copyright">
-            <p>&copy; 2025 Luxury Hotel. All Rights Reserved.</p>
+            <p>&copy; 2025 Serenity Haven Hotel. All rights reserved.</p>
         </div>
     </footer>
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
 
-<!-- AOS Animation Library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- AOS Animation Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
-<!-- Simplified Gallery Script -->
-<script src="js/Aos-animation.js"></script>
-<script src="js/roomavability.js"></script>
-<script src="js/gallery.js"></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="js/Aos-animation.js"></script>
+    <script src="js/roomavability.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/index.js"></script>
 </body>
+
 </html>

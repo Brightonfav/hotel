@@ -1,164 +1,101 @@
-// Complete Mobile Navigation and Hero Slider JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded - initializing navigation');
+    console.log('DOM loaded - initializing Hotel Logic');
     
-    // Image Slider for Hero Section
+    // --- Hero Slider Logic (Only active if .slide elements exist) ---
     const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-    
-    // Set first slide as active
     if (slides.length > 0) {
+        let currentSlide = 0;
         slides[0].classList.add('active');
-        console.log('Hero slider initialized with', slides.length, 'slides');
-    }
-    
-    // Change slide every 5 seconds
-    if (slides.length > 1) {
-        setInterval(function() {
-            // Remove active class from current slide
+        
+        setInterval(() => {
             slides[currentSlide].classList.remove('active');
-            
-            // Update current slide index
             currentSlide = (currentSlide + 1) % slides.length;
-            
-            // Add active class to new current slide
             slides[currentSlide].classList.add('active');
         }, 5000);
     }
     
-    // Mobile Navigation Elements - Get all elements
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileCloseBtn = document.getElementById('mobile-close-btn');
-    const mainNav = document.getElementById('main-nav');
-    const navOverlay = document.getElementById('nav-overlay');
-    const navLinks = document.querySelectorAll('.nav-link');
+    // --- Mobile Navigation Logic ---
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+    const nav = document.querySelector('nav');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const navLinks = document.querySelectorAll('nav ul li a');
     
-    // Debug: Check if elements exist
-    console.log('Mobile menu elements found:', {
-        mobileMenuBtn: !!mobileMenuBtn,
-        mobileCloseBtn: !!mobileCloseBtn,
-        mainNav: !!mainNav,
-        navOverlay: !!navOverlay,
-        navLinksCount: navLinks.length
-    });
-    
-    // Close mobile menu function
-    function closeMobileMenu() {
-        console.log('Closing mobile menu');
-        if (mainNav) {
-            mainNav.classList.remove('active');
-        }
-        if (navOverlay) {
+    function toggleMenu() {
+        const isActive = nav.classList.contains('active');
+        if (isActive) {
+            nav.classList.remove('active');
             navOverlay.classList.remove('active');
-        }
-        document.body.style.overflow = ''; // Restore scrolling
-    }
-    
-    // Open mobile menu function
-    function openMobileMenu() {
-        console.log('Opening mobile menu');
-        if (mainNav) {
-            mainNav.classList.add('active');
-        }
-        if (navOverlay) {
+            document.body.style.overflow = '';
+        } else {
+            nav.classList.add('active');
             navOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
     }
     
-    // Open mobile menu when hamburger button is clicked
     if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', function(e) {
-            e.preventDefault();
+        mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.log('Hamburger menu clicked');
-            openMobileMenu();
+            toggleMenu();
         });
-    } else {
-        console.error('Mobile menu button not found');
     }
     
-    // Close menu when close button is clicked
     if (mobileCloseBtn) {
-        mobileCloseBtn.addEventListener('click', function(e) {
-            e.preventDefault();
+        mobileCloseBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.log('Close button clicked');
-            closeMobileMenu();
+            toggleMenu();
         });
-    } else {
-        console.error('Mobile close button not found');
     }
     
-    // Close menu when overlay is clicked
     if (navOverlay) {
-        navOverlay.addEventListener('click', function(e) {
-            if (e.target === navOverlay) {
-                console.log('Overlay clicked');
-                closeMobileMenu();
+        navOverlay.addEventListener('click', toggleMenu);
+    }
+    
+    // Close menu when clicking a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (nav.classList.contains('active')) {
+                toggleMenu();
             }
         });
-    } else {
-        console.error('Nav overlay not found');
-    }
-    
-    // Close menu on escape key press
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && mainNav && mainNav.classList.contains('active')) {
-            console.log('Escape key pressed');
-            closeMobileMenu();
-        }
     });
     
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768 && mainNav && mainNav.classList.contains('active')) {
-            console.log('Window resized to desktop - closing mobile menu');
-            closeMobileMenu();
+    // --- Active Link Highlight ---
+    // Sets the 'active' class based on current URL
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage) {
+            link.classList.add('active');
+        } else {
+            // Check for anchor links on the same page
+             if (currentPage === 'index.html' && linkPage.startsWith('#')) {
+                 // Logic for scroll spy could go here, but for now we leave it simple
+             } else {
+                 link.classList.remove('active');
+             }
         }
     });
-    
-    // Smooth Scroll Navigation
-    navLinks.forEach(function(link, index) {
-        link.addEventListener('click', function(e) {
+
+    // --- Smooth Scroll for Anchor Links ---
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            console.log('Nav link clicked:', link.textContent);
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
             
-            // Get the target section
-            const targetId = this.getAttribute('data-section');
-            const targetElement = document.getElementById(targetId);
-            
-            // Close the mobile menu first
-            closeMobileMenu();
-            
-            // Scroll to the target section
+            const targetElement = document.querySelector(targetId);
             if (targetElement) {
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = targetElement.offsetTop - headerHeight;
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                 
                 window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            } else if (targetId === 'hero') {
-                // Special case for home link
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+                    top: offsetPosition,
+                    behavior: "smooth"
                 });
             }
         });
     });
-    
-    // Handle booking buttons
-    const bookingButtons = document.querySelectorAll('.booking-btn, .mobile-booking-btn');
-    bookingButtons.forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            console.log('Booking button clicked');
-            closeMobileMenu();
-            // Add your booking functionality here
-        });
-    });
-    
-    console.log('Mobile navigation setup complete');
 });

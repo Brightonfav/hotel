@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rooms & Suites - Serenity Haven Hotel</title>
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
     <!-- AOS Animation Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <!--<link rel="stylesheet" href="css/full-width-fixes.css">-->
-    <!-- Custom CSS -->
-     <link rel="stylesheet" href="css/room.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/room.css">
+    <script src="./js/serenity-preloader.js"></script>
 </head>
-<script src="./js/serenity-preloader.js"></script>
+
 <body>
     <!-- Header with navigation -->
     <header>
@@ -31,19 +32,32 @@
         </div>
         <div class="nav-container">
             <a href="index.html" class="logo">Serenity <span>Haven</span></a>
-            <button class="mobile-menu-btn"><i class="bi bi-list"></i></button>
-            <nav id="main-nav">
+
+            <button class="mobile-menu-btn">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <nav>
+                <button class="mobile-close-btn">
+                    <i class="bi bi-x-lg"></i>
+                </button>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="rooms.html" class="active">Rooms & Suites</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="rooms.html" class="active">Rooms</a></li>
                     <li><a href="amenities.html">Amenities</a></li>
                     <li><a href="gallery.html">Gallery</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
+                <button class="mobile-booking-btn">Book Now</button>
             </nav>
-            <button class="booking-btn" id="nav-book-btn">Book Now</button>
+
+            <button class="booking-btn">Book Now</button>
         </div>
     </header>
+
+    <!-- Overlay for mobile menu -->
+    <div class="nav-overlay"></div>
 
     <!-- Page Banner -->
     <section class="page-banner" data-aos="fade-down">
@@ -55,61 +69,75 @@
         </ul>
     </section>
 
-     <!-- Room Availability Checker Modal -->
-<div id="availability-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;">
-    <div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="color: #333; margin: 0;">Check Availability</h2>
-            <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer;">×</button>
+    <!-- Room Availability Checker Modal -->
+    <div id="availability-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center;">
+        <div
+            style="background-color: white; padding: 30px; border-radius: 4px; max-width: 500px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #333; margin: 0; font-size: 1.5rem;">Check Availability</h2>
+                <button id="close-modal"
+                    style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+            </div>
+            <form id="availability-form">
+                <div style="margin-bottom: 15px;">
+                    <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in
+                        Date:</label>
+                    <input type="date" id="check-in" name="check-in"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out
+                        Date:</label>
+                    <input type="date" id="check-out" name="check-out"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of
+                        Guests:</label>
+                    <select id="guests" name="guests"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                        <option value="1">1 Guest</option>
+                        <option value="2" selected>2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5+ Guests</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room
+                        Type:</label>
+                    <select id="room-type" name="room-type"
+                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                        <option value="any" selected>Any Available</option>
+                        <option value="deluxe">Deluxe Room</option>
+                        <option value="executive">Executive Suite</option>
+                        <option value="presidential">Presidential Suite</option>
+                    </select>
+                </div>
+                <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
+            </form>
         </div>
-        <form id="availability-form">
-            <div style="margin-bottom: 15px;">
-                <label for="check-in" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-in Date:</label>
-                <input type="date" id="check-in" name="check-in" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label for="check-out" style="display: block; margin-bottom: 5px; font-weight: bold;">Check-out Date:</label>
-                <input type="date" id="check-out" name="check-out" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label for="guests" style="display: block; margin-bottom: 5px; font-weight: bold;">Number of Guests:</label>
-                <select id="guests" name="guests" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                    <option value="1">1 Guest</option>
-                    <option value="2" selected>2 Guests</option>
-                    <option value="3">3 Guests</option>
-                    <option value="4">4 Guests</option>
-                    <option value="5">5+ Guests</option>
-                </select>
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label for="room-type" style="display: block; margin-bottom: 5px; font-weight: bold;">Room Type:</label>
-                <select id="room-type" name="room-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                    <option value="any" selected>Any Available</option>
-                    <option value="deluxe">Deluxe Room</option>
-                    <option value="executive">Executive Suite</option>
-                    <option value="presidential">Presidential Suite</option>
-                </select>
-            </div>
-            <button type="submit" class="booking-btn" style="width: 100%;">Search Availability</button>
-        </form>
     </div>
-</div>
-
 
     <!-- Rooms Section -->
     <section class="rooms-section">
         <h2 class="section-title" data-aos="fade-up">Discover Our Accommodations</h2>
-        
+
         <!-- Presidential Suite (Featured Room) -->
         <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="100">
             <div class="room-image" style="background-image: url('images/img-4.webp')">
                 <div class="room-tag">Featured</div>
-                <a href="#" class="room-gallery-btn open-gallery" data-room="presidential"><i class="bi bi-images"></i></a>
+                <a href="#" class="room-gallery-btn open-gallery" data-room="presidential"><i
+                        class="bi bi-images"></i></a>
             </div>
             <div class="room-details">
                 <h3 class="room-title">Presidential Suite</h3>
-                <p class="room-description">Our most luxurious accommodation, the Presidential Suite offers unparalleled elegance and comfort. Featuring panoramic views, a spacious living area, private dining room, and exclusive access to our VIP lounge. Experience the pinnacle of luxury with personalized butler service and premium amenities.</p>
-                
+                <p class="room-description">Our most luxurious accommodation, the Presidential Suite offers unparalleled
+                    elegance and comfort. Featuring panoramic views, a spacious living area, private dining room, and
+                    exclusive access to our VIP lounge. Experience the pinnacle of luxury with personalized butler
+                    service and premium amenities.</p>
+
                 <div class="room-features">
                     <div class="room-feature">
                         <i class="bi bi-rulers"></i>
@@ -119,42 +147,15 @@
                         <i class="bi bi-people-fill"></i>
                         <span>4 Guests</span>
                     </div>
-                    <div class="room-feature">
-                        <i class="bi bi-door-open-fill"></i>
-                        <span>2 Bedrooms</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-badge-hd-fill"></i>
-                        <span>City View</span>
-                    </div>
                 </div>
-                
-                <div class="room-features">
-                    <div class="room-feature">
-                        <i class="bi bi-wifi"></i>
-                        <span>Free WiFi</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-cup-hot-fill"></i>
-                        <span>Breakfast Included</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-snow2"></i>
-                        <span>Air Conditioning</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-tv-fill"></i>
-                        <span>Smart TV</span>
-                    </div>
-                </div>
-                
+
                 <div class="room-bottom">
                     <div class="room-price">$499 <span>/ night</span></div>
-                    <button class="room-btn">Book Now</button>
+                    <button class="booking-btn">Book Now</button>
                 </div>
             </div>
         </div>
-        
+
         <!-- Executive Suite -->
         <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="200">
             <div class="room-image" style="background-image: url('images/img-5.webp')">
@@ -162,8 +163,10 @@
             </div>
             <div class="room-details">
                 <h3 class="room-title">Executive Suite</h3>
-                <p class="room-description">Perfect for business travelers or those seeking extra space, our Executive Suite features a separate living area and workspace. Enjoy premium amenities, a king-size bed, and access to our Executive Lounge with complimentary refreshments throughout the day.</p>
-                
+                <p class="room-description">Perfect for business travelers or those seeking extra space, our Executive
+                    Suite features a separate living area and workspace. Enjoy premium amenities, a king-size bed, and
+                    access to our Executive Lounge with complimentary refreshments throughout the day.</p>
+
                 <div class="room-features">
                     <div class="room-feature">
                         <i class="bi bi-rulers"></i>
@@ -173,42 +176,15 @@
                         <i class="bi bi-people-fill"></i>
                         <span>2 Guests</span>
                     </div>
-                    <div class="room-feature">
-                        <i class="bi bi-door-open-fill"></i>
-                        <span>1 Bedroom</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-badge-hd-fill"></i>
-                        <span>Garden View</span>
-                    </div>
                 </div>
-                
-                <div class="room-features">
-                    <div class="room-feature">
-                        <i class="bi bi-wifi"></i>
-                        <span>Free WiFi</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-cup-hot-fill"></i>
-                        <span>Breakfast Included</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-snow2"></i>
-                        <span>Air Conditioning</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-tv-fill"></i>
-                        <span>Smart TV</span>
-                    </div>
-                </div>
-                
+
                 <div class="room-bottom">
                     <div class="room-price">$299 <span>/ night</span></div>
-                    <button class="room-btn">Book Now</button>
+                    <button class="booking-btn">Book Now</button>
                 </div>
             </div>
         </div>
-        
+
         <!-- Deluxe Room -->
         <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="300">
             <div class="room-image" style="background-image: url('images/img-6.webp')">
@@ -216,8 +192,10 @@
             </div>
             <div class="room-details">
                 <h3 class="room-title">Deluxe Room</h3>
-                <p class="room-description">Our spacious Deluxe Rooms offer the perfect blend of comfort and elegance. Featuring a plush king-size bed, modern furnishings, and a well-appointed bathroom with premium toiletries. Enjoy city views and thoughtful amenities for a relaxing stay.</p>
-                
+                <p class="room-description">Our spacious Deluxe Rooms offer the perfect blend of comfort and elegance.
+                    Featuring a plush king-size bed, modern furnishings, and a well-appointed bathroom with premium
+                    toiletries. Enjoy city views and thoughtful amenities for a relaxing stay.</p>
+
                 <div class="room-features">
                     <div class="room-feature">
                         <i class="bi bi-rulers"></i>
@@ -227,146 +205,104 @@
                         <i class="bi bi-people-fill"></i>
                         <span>2 Guests</span>
                     </div>
-                    <div class="room-feature">
-                        <i class="bi bi-door-open-fill"></i>
-                        <span>1 Bedroom</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-badge-hd-fill"></i>
-                        <span>City View</span>
-                    </div>
                 </div>
-                
-                <div class="room-features">
-                    <div class="room-feature">
-                        <i class="bi bi-wifi"></i>
-                        <span>Free WiFi</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-cup-hot-fill"></i>
-                        <span>Breakfast Available</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-snow2"></i>
-                        <span>Air Conditioning</span>
-                    </div>
-                    <div class="room-feature">
-                        <i class="bi bi-tv-fill"></i>
-                        <span>Smart TV</span>
-                    </div>
-                </div>
-                
+
                 <div class="room-bottom">
                     <div class="room-price">$199 <span>/ night</span></div>
-                    <button class="room-btn">Book Now</button>
+                    <button class="booking-btn">Book Now</button>
                 </div>
             </div>
         </div>
-        
-       <!-- Family Suite -->
-<div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="400">
-    <div class="room-image" style="background-image: url('images/img-7.webp')">
-        <div class="room-tag">Family</div>
-        <a href="#" class="room-gallery-btn open-gallery" data-room="family"><i class="bi bi-images"></i></a>
-    </div>
-    <div class="room-details">
-        <h3 class="room-title">Family Suite</h3>
-        <p class="room-description">Designed with families in mind, our Family Suite offers ample space for everyone. With two connecting bedrooms, a comfortable living area, and child-friendly amenities, it's perfect for a family getaway. Enjoy special welcome gifts for the little ones and a range of family services.</p>
-        
-        <div class="room-features">
-            <div class="room-feature">
-                <i class="bi bi-rulers"></i>
-                <span>900 sq ft</span>
+
+        <!-- Family Suite -->
+        <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="400">
+            <div class="room-image" style="background-image: url('images/img-7.webp')">
+                <div class="room-tag">Family</div>
+                <a href="#" class="room-gallery-btn open-gallery" data-room="family"><i class="bi bi-images"></i></a>
             </div>
-            <div class="room-feature">
-                <i class="bi bi-people-fill"></i>
-                <span>4 Guests</span>
-            </div>
-            <div class="room-feature">
-                <i class="bi bi-door-open"></i>
-                <span>2 Bedrooms</span>
-            </div>
-            <div class="room-feature">
-                <i class="bi bi-tv"></i>
-                <span>Smart TV</span>
-            </div>
-            <div class="room-feature">
-                <i class="bi bi-wifi"></i>
-                <span>Free WiFi</span>
-            </div>
-            <div class="room-feature">
-                <i class="bi bi-snow"></i>
-                <span>Air Conditioning</span>
+            <div class="room-details">
+                <h3 class="room-title">Family Suite</h3>
+                <p class="room-description">Designed with families in mind, our Family Suite offers ample space for
+                    everyone. With two connecting bedrooms, a comfortable living area, and child-friendly amenities,
+                    it's perfect for a family getaway. Enjoy special welcome gifts for the little ones and a range of
+                    family services.</p>
+
+                <div class="room-features">
+                    <div class="room-feature">
+                        <i class="bi bi-rulers"></i>
+                        <span>900 sq ft</span>
+                    </div>
+                    <div class="room-feature">
+                        <i class="bi bi-people-fill"></i>
+                        <span>4 Guests</span>
+                    </div>
+                </div>
+
+                <div class="room-bottom">
+                    <div class="room-price">
+                        $299 <span>/ night</span>
+                    </div>
+                    <button class="booking-btn">Book Now</button>
+                </div>
             </div>
         </div>
-        
-        <div class="room-bottom">
-            <div class="room-price">
-                $299 <span>per night</span>
-            </div>
-            <button class="room-btn">Book Now</button>
-        </div>
-    </div>
-</div>
     </section>
 
-        <!-- Call to Action Section -->
-<section class="cta">
-    <h2>Experience Luxury Like Never Before</h2>
-    <p>Book your stay today and enjoy exclusive benefits including complimentary breakfast, spa credits, and personalized concierge service for a truly unforgettable experience.</p>
-    <button class="room-btn">Reserve Your Stay</button>
-</section>
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <h2>Experience Luxury Like Never Before</h2>
+        <p>Book your stay today and enjoy exclusive benefits including complimentary breakfast, spa credits, and
+            personalized concierge service for a truly unforgettable experience.</p>
+        <button class="booking-btn">Reserve Your Stay</button>
+    </section>
 
-<!-- Footer -->
-<footer>
-    <div class="footer-content">
-        <div class="footer-column">
-            <h3>Luxury Hotel</h3>
-            <p>Experience the epitome of luxury and comfort in our meticulously designed accommodations located in the heart of the city.</p>
-            <p>123 Elegant Street<br>
-               Luxury District, LX 12345<br>
-               United States</p>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Serenity Haven</h3>
+                <p>123 Luxury Avenue</p>
+                <p>Cityville, State 12345</p>
+                <p>United States</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="rooms.html">Rooms & Suites</a>
+                <a href="amenities.html">Amenities</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <a href="#">Special Offers</a>
+                <a href="#">Events</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for exclusive offers and updates.</p>
+                <form onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Your email address"
+                        style="padding: 10px; width: 100%; margin-bottom: 10px; border-radius: 2px; border: none;">
+                    <button type="submit" class="booking-btn" style="width: 100%;">Subscribe</button>
+                </form>
+            </div>
         </div>
-        
-        <div class="footer-column">
-            <h3>Quick Links</h3>
-            <a href="#">Home</a>
-            <a href="#">Rooms & Suites</a>
-            <a href="#">Dining</a>
-            <a href="#">Spa & Wellness</a>
-            <a href="#">Events</a>
-            <a href="#">Gallery</a>
-            <a href="#">Contact</a>
+        <div class="copyright">
+            <p>&copy; 2025 Serenity Haven Hotel. All rights reserved.</p>
         </div>
-        
-        <div class="footer-column">
-            <h3>Contact Us</h3>
-            <p><i class="bi bi-telephone"></i> +1 (555) 123-4567</p>
-            <p><i class="bi bi-envelope"></i> info@luxuryhotel.com</p>
-            <p><i class="bi bi-clock"></i> Check-in: 3:00 PM<br>Check-out: 12:00 PM</p>
-        </div>
-        
-        <div class="footer-column">
-            <h3>Newsletter</h3>
-            <p>Subscribe to our newsletter for exclusive offers and updates.</p>
-            <form>
-                <input type="email" placeholder="Your email address" style="padding: 10px; width: 100%; margin-bottom: 10px; background: #333; border: 1px solid #444; color: white;">
-                <button class="room-btn" style="width: 100%;">Subscribe</button>
-            </form>
-        </div>
-    </div>
-    
-    <div class="copyright">
-        <p>&copy; 2025 Luxury Hotel. All Rights Reserved.</p>
-    </div>
-</footer>
+    </footer>
 
- <!-- Add this at the end of your body tag, just before the closing </body> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script src="js/Aos-animation.js"></script>
-<script src="js/roomavability.js"></script>
-<script src="js/rooms.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="js/Aos-animation.js"></script>
+    <script src="js/roomavability.js"></script>
+    <script src="js/rooms.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/index.js"></script>
 </body>
+
 </html>
