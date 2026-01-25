@@ -922,7 +922,6 @@ nav ul li a:hover {
 .about-image {
     flex: 1;
     height: 400px;
-    background: url('/api/placeholder/600/400') center/cover no-repeat;
     border-radius: 10px;
 }
 
@@ -1072,10 +1071,18 @@ nav ul li a:hover {
     text-align: center;
 }
 
-.testimonial-slider {
+.testimonial-slider-container {
     max-width: 800px;
     margin: 40px auto;
-    text-align: center;
+    position: relative;
+    padding: 0 40px;
+    /* Space for arrow */
+}
+
+.testimonial-slider {
+    position: relative;
+    min-height: 250px;
+    /* Prevent jumpiness */
 }
 
 .testimonial-card {
@@ -1084,6 +1091,26 @@ nav ul li a:hover {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
+    display: none;
+    /* Hide by default */
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.testimonial-card.active {
+    display: block;
+    /* Show only active */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .guest-image {
@@ -1102,6 +1129,30 @@ nav ul li a:hover {
 .guest-name {
     font-weight: bold;
     color: #d4af37;
+}
+
+.slider-next-btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: none;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.slider-next-btn:hover {
+    background-color: #d4af37;
+    color: white;
 }
 
 /* CTA section */
@@ -1342,4 +1393,195 @@ footer {
 html,
 body {
     overflow-x: hidden;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    border-top: 5px solid var(--primary-color);
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.modal-header h2 {
+    color: var(--text-dark);
+    margin: 0;
+    font-size: 1.8rem;
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: color 0.3s;
+    line-height: 1;
+    padding: 0;
+}
+
+.modal-close-btn:hover {
+    color: var(--primary-color);
+}
+
+.modal-form-group {
+    margin-bottom: 20px;
+}
+
+.modal-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    color: var(--text-dark);
+}
+
+.modal-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    outline: none;
+}
+
+.modal-helper-text {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 5px;
+}
+
+.modal-divider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin: 25px 0;
+}
+
+.modal-results,
+.modal-success {
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.modal-results-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    text-align: left;
+    border-left: 4px solid var(--primary-color);
+}
+
+.results-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.results-row.total {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+}
+
+.success-icon {
+    font-size: 60px;
+    color: #28a745;
+    margin-bottom: 20px;
+    animation: scaleCheck 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-link-btn {
+    background: none;
+    border: none;
+    text-decoration: underline;
+    color: var(--text-light);
+    margin-top: 15px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: color 0.3s;
+}
+
+.modal-link-btn:hover {
+    color: var(--primary-color);
+}
+
+@keyframes scaleCheck {
+    0% {
+        transform: scale(0);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Date picker customization */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.4);
+    transition: filter 0.3s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    filter: invert(0.7) sepia(60%) saturate(400%) hue-rotate(350deg);
 }
