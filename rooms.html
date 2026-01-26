@@ -4,6 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Explore our luxurious rooms and suites at Serenity Haven Hotel. From Deluxe Rooms to the Presidential Suite, find your perfect stay.">
+    <meta property="og:title" content="Rooms & Suites - Serenity Haven Hotel">
+    <meta property="og:description" content="Explore our luxurious rooms and suites. Comfort and elegance await.">
+    <meta property="og:image" content="images/img-4.webp">
+    <link rel="icon" type="image/png" href="images/react.webp">
     <title>Rooms & Suites - Serenity Haven Hotel</title>
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
@@ -82,7 +88,7 @@
         <h2 class="section-title" data-aos="fade-up">Discover Our Accommodations</h2>
 
         <!-- Presidential Suite (Featured Room) -->
-        <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="100">
+        <div id="presidential-suite" class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="100">
             <div class="room-image" style="background-image: url('images/img-4.webp')">
                 <div class="room-tag">Featured</div>
                 <a href="#" class="room-gallery-btn open-gallery" data-room="presidential"><i
@@ -114,7 +120,7 @@
         </div>
 
         <!-- Executive Suite -->
-        <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="200">
+        <div id="executive-suite" class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="200">
             <div class="room-image" style="background-image: url('images/img-5.webp')">
                 <a href="#" class="room-gallery-btn open-gallery" data-room="executive"><i class="bi bi-images"></i></a>
             </div>
@@ -143,7 +149,7 @@
         </div>
 
         <!-- Deluxe Room -->
-        <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="300">
+        <div id="deluxe-room" class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="300">
             <div class="room-image" style="background-image: url('images/img-6.webp')">
                 <a href="#" class="room-gallery-btn open-gallery" data-room="deluxe"><i class="bi bi-images"></i></a>
             </div>
@@ -172,7 +178,7 @@
         </div>
 
         <!-- Family Suite -->
-        <div class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="400">
+        <div id="family-suite" class="room-card room-card-horizontal" data-aos="fade-up" data-aos-delay="400">
             <div class="room-image" style="background-image: url('images/img-7.webp')">
                 <div class="room-tag">Family</div>
                 <a href="#" class="room-gallery-btn open-gallery" data-room="family"><i class="bi bi-images"></i></a>
@@ -257,6 +263,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="js/Aos-animation.js"></script>
     <script src="js/roomavability.js"></script>
+    <script src="js/floating-contact.js"></script>
     <script src="js/rooms.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/index.js"></script>

@@ -143,4 +143,56 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // --- Newsletter Subscription Logic ---
+    const newsletterForm = document.querySelector('form');
+    if (newsletterForm && newsletterForm.querySelector('input[type="email"]')) {
+        newsletterForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerText;
+            const input = this.querySelector('input');
+
+            btn.innerText = 'Subscribing...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerText = 'Subscribed!';
+                btn.style.backgroundColor = '#28a745';
+                input.value = '';
+
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                    btn.style.backgroundColor = '';
+                }, 3000);
+            }, 1500);
+        });
+    }
+
+    // --- Scroll to Top Button Logic ---
+    // Inject the button
+    if (!document.querySelector('.scroll-top-btn')) {
+        const scrollTopBtn = document.createElement('button');
+        scrollTopBtn.className = 'scroll-top-btn';
+        scrollTopBtn.innerHTML = '<i class="bi bi-arrow-up"></i>';
+        document.body.appendChild(scrollTopBtn);
+
+        // Scroll logic
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Click logic
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
 });
