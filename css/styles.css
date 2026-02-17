@@ -616,17 +616,34 @@ footer {
 @media (max-width: 768px) {
     .top-bar {
         display: none;
-        /* Hide top bar on mobile for cleaner look */
+    }
+
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .logo {
+        order: 1;
+        font-size: 20px;
+        /* Slightly smaller logo on mobile to fit button */
     }
 
     .booking-btn {
-        display: none;
-        /* Hide desktop booking button */
+        display: block;
+        /* Show on mobile */
+        order: 2;
+        padding: 8px 12px;
+        font-size: 14px;
+        margin: 0 10px;
     }
 
     .mobile-menu-btn {
         display: block;
         z-index: 1001;
+        order: 3;
     }
 
     .mobile-booking-btn {

@@ -6,136 +6,13 @@
             font-family: 'Arial', sans-serif;
             scroll-behavior: smooth;
         }
-        
+
         body {
             color: #333;
             line-height: 1.6;
         }
-        
-        /* Header styles */
-        header {
-            background-color: #1a1a1a;
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 5%;
-            background-color: #0f0f0f;
-        }
-        
-        .contact-info {
-            font-size: 14px;
-        }
-        
-        .contact-info span {
-            margin-right: 20px;
-        }
-        
-        .social-icons a {
-            color: white;
-            margin-left: 15px;
-            text-decoration: none;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-            color: white;
-        }
-        
-        .logo span {
-            color: #d4af37;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 30px;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        nav ul li a:hover, nav ul li a.active {
-            color: #d4af37;
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        .booking-btn {
-            background-color: #d4af37;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        
-        .booking-btn:hover {
-            background-color: #c4a030;
-        }
-        
-        /* Page Banner */
-        .page-banner {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/img\ 10.webp') center/cover no-repeat;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 5%;
-        }
-        
-        .page-banner h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-        
-        .breadcrumb {
-            display: flex;
-            list-style: none;
-        }
-        
-        .breadcrumb li {
-            margin: 0 5px;
-        }
-        
-        .breadcrumb li a {
-            color: #d4af37;
-            text-decoration: none;
-        }
+
+
 
         /* Section styles */
         .section-title {
@@ -145,7 +22,7 @@
             text-align: center;
             color: #333;
         }
-        
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -571,17 +448,17 @@
             color: white;
             text-align: center;
         }
-        
+
         .cta h2 {
             font-size: 36px;
             margin-bottom: 20px;
         }
-        
+
         .cta p {
             max-width: 600px;
             margin: 0 auto 30px;
         }
-        
+
         .room-btn {
             background-color: #333;
             color: white;
@@ -592,170 +469,142 @@
             font-weight: bold;
             transition: background-color 0.3s;
         }
-        
+
         .room-btn:hover {
             background-color: #d4af37;
         }
-        
+
         /* Footer styles */
         footer {
             background-color: #1a1a1a;
             color: white;
             padding: 60px 5% 20px;
         }
-        
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             margin-bottom: 40px;
         }
-        
+
         .footer-column h3 {
             font-size: 18px;
             margin-bottom: 20px;
             color: #d4af37;
         }
-        
-        .footer-column p, .footer-column a {
+
+        .footer-column p,
+        .footer-column a {
             color: #ccc;
             margin-bottom: 10px;
             display: block;
             text-decoration: none;
         }
-        
+
         .footer-column a:hover {
             color: #d4af37;
         }
-        
+
         .copyright {
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid #333;
             color: #ccc;
         }
-        
+
         /* Animation classes */
         .fade-up {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s, transform 0.8s;
         }
-        
+
         .fade-up.active {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .stagger-item {
             opacity: 0;
             transform: translateY(30px);
         }
-        
+
         @keyframes float {
             0% {
                 transform: translateY(0);
             }
+
             50% {
                 transform: translateY(-5px);
             }
+
             100% {
                 transform: translateY(0);
             }
         }
-        
+
         .float-animation {
             animation: float 4s ease-in-out infinite;
         }
-        
+
         /* Responsive design */
         @media (max-width: 992px) {
+
             .contact-form-box,
             .booking-form-container {
                 padding: 40px 30px;
             }
         }
-        
+
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                right: 5%;
-                top: 20px;
-            }
-            
-            nav {
-                width: 100%;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-            }
-            
-            nav.active {
-                max-height: 300px;
-            }
-            
-            nav ul {
-                margin-top: 20px;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            nav ul li {
-                margin: 10px 0;
-            }
-            
             .page-banner h1 {
                 font-size: 36px;
             }
-            
+
             .section-title {
                 font-size: 30px;
             }
-            
+
             .contact-form-box,
             .booking-form-container {
                 padding: 30px 20px;
             }
-            
+
             .form-row {
                 grid-template-columns: 1fr;
             }
-            
+
             .room-type {
                 flex-direction: column;
                 align-items: flex-start;
                 padding: 20px 0;
             }
-            
+
             .room-type-image {
                 margin-right: 0;
                 margin-bottom: 15px;
                 width: 100%;
                 height: 150px;
             }
-            
+
             .room-select-btn {
                 margin-left: 0;
                 margin-top: 15px;
             }
         }
-        
+
         @media (max-width: 576px) {
+
             .contact-info-box,
             .policy-box {
                 padding: 20px;
             }
-            
+
             .faq-question {
                 padding: 15px 20px;
             }
-            
+
             .faq-active .faq-answer {
                 padding: 15px 20px;
             }
